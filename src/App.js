@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import styled, { ThemeProvider } from "styled-components";
+import { CenteredContainer } from "./components/Containers";
+import { theme } from "./theme";
+import Login from "./views/Login";
+import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
+import Register from "./views/Register";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <MainContainer>
+        <Router>
+          <Routes>
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/register" element={<Register />} />
+          </Routes>
+        </Router>
+      </MainContainer>
+    </ThemeProvider>
   );
 }
 
 export default App;
+
+const MainContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${({ theme }) => theme.gradients.lemon};
+`;
