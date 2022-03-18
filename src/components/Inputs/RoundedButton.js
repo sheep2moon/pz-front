@@ -2,30 +2,15 @@ import React from "react";
 import { BsArrowRight } from "react-icons/bs";
 import styled from "styled-components";
 
-const RoundedButton = ({ children }) => {
+const RoundedButton = ({ color }) => {
   return (
-    <Wrapper>
-      <LabelText>{children}</LabelText>
-      <StyledButton>
-        <BsArrowRight />
-      </StyledButton>
-    </Wrapper>
+    <StyledButton color={color}>
+      <BsArrowRight />
+    </StyledButton>
   );
 };
 
 export default RoundedButton;
-
-const Wrapper = styled.div`
-  margin-top: 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 2rem;
-`;
-
-const LabelText = styled.p`
-  font-size: 1.4rem;
-`;
 
 const StyledButton = styled.button`
   width: 3rem;
@@ -35,7 +20,12 @@ const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${({ theme }) => theme.colors.green};
+  background: ${({ theme, color }) =>
+    color === "yellow"
+      ? theme.colors.yellow
+      : color === "green"
+      ? theme.colors.green
+      : theme.colors.pink};
   svg {
     font-size: 1.6rem;
   }

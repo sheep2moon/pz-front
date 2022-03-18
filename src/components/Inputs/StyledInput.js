@@ -47,6 +47,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
+  width: 100%;
   font-size: 1.4rem;
   border: ${({ theme }) => theme.colors.grey};
   padding: 0.5rem 0.5rem;

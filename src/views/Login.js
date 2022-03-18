@@ -1,6 +1,7 @@
 import React from "react";
-
 import styled from "styled-components";
+import { CenteredContainer } from "../components/Containers";
+import { Divider } from "../components/decorations";
 import RoundedButton from "../components/Inputs/RoundedButton";
 import StyledInput from "../components/Inputs/StyledInput";
 import UnderlinedLinkButton from "../components/Inputs/UnderlinedLinkButton";
@@ -8,20 +9,26 @@ import { HeadingText } from "../components/styledText";
 
 const Login = () => {
   return (
-    <LoginWrapper>
-      <HeadingText>Welcome</HeadingText>
-      <StyledInput variant="light" label="Login" />
-      <StyledInput variant="light" label="Password" type="password" />
-      <RoundedButton>Sign In</RoundedButton>
-      <BottomButtonsWrap>
-        <UnderlinedLinkButton to="/register" text="sign up" />
-        <UnderlinedLinkButton
-          to="/forgot-password"
-          text="forgot password"
-          color="green"
-        />
-      </BottomButtonsWrap>
-    </LoginWrapper>
+    <CenteredContainer color="primary">
+      <LoginWrapper>
+        <HeadingText>Welcome</HeadingText>
+        <StyledInput variant="light" label="Login" />
+        <StyledInput variant="light" label="Password" type="password" />
+        <OptionsWrap>
+          <UnderlinedLinkButton
+            to="/forgot-password"
+            text="forgot password?"
+            color="green"
+          />
+          <RoundedButton color="green" />
+        </OptionsWrap>
+        <Divider color="green" />
+        <BottomButtonsWrap>
+          <p>Don't have an account?</p>
+          <UnderlinedLinkButton to="/register" text="sign up" />
+        </BottomButtonsWrap>
+      </LoginWrapper>
+    </CenteredContainer>
   );
 };
 
@@ -32,9 +39,19 @@ const LoginWrapper = styled.div`
   flex-direction: column;
 `;
 
-const BottomButtonsWrap = styled.div`
-  margin-top: 4rem;
+const OptionsWrap = styled.div`
+  margin: 1rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const BottomButtonsWrap = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  p {
+    margin-right: 1rem;
+  }
 `;
