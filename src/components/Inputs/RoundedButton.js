@@ -2,9 +2,9 @@ import React from "react";
 import { BsArrowRight } from "react-icons/bs";
 import styled from "styled-components";
 
-const RoundedButton = ({ color }) => {
+const RoundedButton = ({ color, ...rest }) => {
   return (
-    <StyledButton color={color}>
+    <StyledButton color={color} {...rest}>
       <BsArrowRight />
     </StyledButton>
   );

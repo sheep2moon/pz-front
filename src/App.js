@@ -3,6 +3,7 @@ import { theme } from "./theme";
 import Login from "./views/Login";
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import Register from "./views/Register";
+import Profile from "./views/Profile.js";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
+          <Route exact path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </ThemeProvider>

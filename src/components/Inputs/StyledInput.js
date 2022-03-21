@@ -5,9 +5,9 @@ import styled from "styled-components";
 //         -light
 //         -dark
 
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 
-const StyledInput = ({ variant, label, ...rest }) => {
+const StyledInput = forwardRef(({ variant, label, ...rest }, ref) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => setIsFocused(true);
@@ -17,8 +17,13 @@ const StyledInput = ({ variant, label, ...rest }) => {
   };
   return (
     <Wrapper>
-      <Label isFocused={isFocused}>{label}</Label>
+      <Label isFocused={isFocused} htmlFor={label}>
+        {label}
+      </Label>
       <Input
+        ref={ref}
+        name={label}
+        autoComplete="new-password"
         {...rest}
         variant={variant}
         onFocus={handleFocus}
@@ -26,7 +31,7 @@ const StyledInput = ({ variant, label, ...rest }) => {
       />
     </Wrapper>
   );
-};
+});
 
 export default StyledInput;
 
