@@ -6,7 +6,6 @@ import { Divider } from "../components/decorations";
 import RoundedButton from "../components/Inputs/RoundedButton";
 import StyledInput from "../components/Inputs/StyledInput";
 import UnderlinedLinkButton from "../components/Inputs/UnderlinedLinkButton";
-import { HeadingText } from "../components/styledText";
 import { callApi } from "../helpers/callApi.js";
 import { validateEmail } from "../helpers/validateEmail.js";
 
@@ -48,18 +47,18 @@ const Register = () => {
   return (
     <CenteredContainer>
       <RegisterWrapper>
-        <HeadingText>Sign up</HeadingText>
+        <HeadingText>Create Account</HeadingText>
         <InputsWrap>
-          <StyledInput variant="light" label="Username" ref={usernameRef} />
-          <StyledInput variant="light" label="E-mail" ref={emailRef} />
+          <StyledInput variant="dark" label="Username" ref={usernameRef} />
+          <StyledInput variant="dark" label="E-mail" ref={emailRef} />
           <StyledInput
-            variant="light"
+            variant="dark"
             label="Password"
             type="password"
             ref={passwordRef}
           />
           <StyledInput
-            variant="light"
+            variant="dark"
             label="Confirm Password"
             type="password"
             ref={confirmPasswordRef}
@@ -72,7 +71,7 @@ const Register = () => {
         <Divider color="pink" />
         <BottomWrap>
           <p>Already have an account?</p>
-          <UnderlinedLinkButton to="/login" text="sign in" color="pink" />
+          <UnderlinedLinkButton to="/login" text="Sign In" color="pink" />
         </BottomWrap>
       </RegisterWrapper>
     </CenteredContainer>
@@ -84,17 +83,32 @@ export default Register;
 const RegisterWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+`;
+const HeadingText = styled.h1`
+  font-size: 3.6rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #fff;
 `;
 const InputsWrap = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const ConfirmWrapper = styled.div`
-  margin: 1rem 0;
+  width: 100%;
+  margin: 2rem 0;
+  max-width: 385px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  p {
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
 `;
 
 const BottomWrap = styled.div`
@@ -104,5 +118,6 @@ const BottomWrap = styled.div`
   justify-content: space-between;
   p {
     margin-right: 1rem;
+    font-size: 1.2rem;
   }
 `;

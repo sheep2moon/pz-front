@@ -17,7 +17,7 @@ const StyledInput = forwardRef(({ variant, label, ...rest }, ref) => {
   };
   return (
     <Wrapper>
-      <Label isFocused={isFocused} htmlFor={label}>
+      <Label isFocused={isFocused} htmlFor={label} variant={variant}>
         {label}
       </Label>
       <Input
@@ -37,23 +37,27 @@ export default StyledInput;
 
 const Wrapper = styled.div`
   position: relative;
+  width: 100%;
+  max-width: 385px;
   margin-top: 1.5rem;
+  display: flex;
 `;
 
 const Label = styled.label`
   pointer-events: none;
   transition: all 0.5s ease-in-out;
-  font-size: ${({ isFocused }) => (isFocused ? "0.75rem" : "1rem")};
+  font-size: ${({ isFocused }) => (isFocused ? "1.1rem" : "1.4rem")};
   position: absolute;
   top: ${({ isFocused }) => (isFocused ? "-1rem" : "50%")};
   left: ${({ isFocused }) => (isFocused ? "0.5rem" : "1rem")};
   transform: ${({ isFocused }) => (isFocused ? "none" : "translateY(-50%)")};
-  opacity: ${({ isFocused }) => (isFocused ? "0.8" : "0.4")};
+  opacity: ${({ isFocused }) => (isFocused ? "1" : "0.8")};
+  color: ${({ variant }) => (variant === "light" ? "#000" : "#fff")};
 `;
 
 const Input = styled.input`
   width: 100%;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   border: ${({ theme }) => theme.colors.grey};
   padding: 0.5rem 0.5rem;
   border: none;

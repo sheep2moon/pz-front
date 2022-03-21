@@ -6,7 +6,6 @@ import { Divider } from "../components/decorations";
 import RoundedButton from "../components/Inputs/RoundedButton";
 import StyledInput from "../components/Inputs/StyledInput";
 import UnderlinedLinkButton from "../components/Inputs/UnderlinedLinkButton";
-import { HeadingText } from "../components/styledText";
 import { callApi } from "../helpers/callApi.js";
 
 const Login = () => {
@@ -48,7 +47,7 @@ const Login = () => {
         <OptionsWrap>
           <UnderlinedLinkButton
             to="/forgot-password"
-            text="forgot password?"
+            text="Forgot password?"
             color="green"
           />
           <RoundedButton color="green" onClick={handleLogin} />
@@ -56,7 +55,7 @@ const Login = () => {
         <Divider color="green" />
         <BottomButtonsWrap>
           <p>Don't have an account?</p>
-          <UnderlinedLinkButton to="/register" text="sign up" />
+          <UnderlinedLinkButton to="/register" text="Sign Up" />
         </BottomButtonsWrap>
       </LoginWrapper>
     </CenteredContainer>
@@ -65,12 +64,22 @@ const Login = () => {
 
 export default Login;
 
+const HeadingText = styled.h1`
+  font-size: 3.6rem;
+  margin-bottom: 3rem;
+  text-align: center;
+`;
+
 const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 385px;
+  align-items: center;
 `;
 
 const OptionsWrap = styled.div`
+  width: 100%;
   margin: 1rem 0;
   display: flex;
   justify-content: space-between;
@@ -84,5 +93,6 @@ const BottomButtonsWrap = styled.div`
   align-items: center;
   p {
     margin-right: 1rem;
+    font-size: 1.2rem;
   }
 `;

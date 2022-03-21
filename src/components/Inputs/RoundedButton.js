@@ -13,8 +13,8 @@ const RoundedButton = ({ color, ...rest }) => {
 export default RoundedButton;
 
 const StyledButton = styled.button`
-  width: 3rem;
-  height: 3rem;
+  width: 3.6rem;
+  height: 3.6rem;
   border-radius: 50%;
   border: none;
   display: flex;
@@ -27,7 +27,7 @@ const StyledButton = styled.button`
       ? theme.colors.green
       : theme.colors.pink};
   svg {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
   :hover {
     opacity: 0.9;

@@ -33,7 +33,7 @@ const Underline = styled.div`
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: #000;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   background: none;
 
   border: none;
