@@ -62,6 +62,7 @@ const Option = styled.button`
   margin: 0.5rem 0;
   border-radius: 20px;
   :hover {
+    cursor: pointer;
     background-color: ${({ theme }) => theme.colors.darkGray};
   }
 `;

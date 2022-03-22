@@ -1,13 +1,7 @@
 import styled from "styled-components";
-
-// options
-//     variant:
-//         -light
-//         -dark
-
 import React, { forwardRef, useState } from "react";
 
-const StyledInput = forwardRef(({ variant, label, ...rest }, ref) => {
+const StyledInput = forwardRef(({ variant, label, isError, ...rest }, ref) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => setIsFocused(true);
@@ -21,6 +15,7 @@ const StyledInput = forwardRef(({ variant, label, ...rest }, ref) => {
         {label}
       </Label>
       <Input
+        isError={isError}
         ref={ref}
         name={label}
         autoComplete="new-password"
@@ -61,8 +56,9 @@ const Input = styled.input`
   border: ${({ theme }) => theme.colors.grey};
   padding: 0.5rem 0.5rem;
   border: none;
+  outline: ${({ theme, isError }) =>
+    isError ? `1px solid ${theme.colors.red}` : "none"};
   background-color: ${({ theme, variant }) =>
     variant === "light" ? theme.colors.lightGray : theme.colors.darkGray};
   border-radius: 0.5rem;
-  outline: none;
 `;

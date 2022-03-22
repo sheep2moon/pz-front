@@ -26,11 +26,13 @@ const StyledButton = styled.button`
       : color === "green"
       ? theme.colors.green
       : theme.colors.pink};
+  transition: all 0.2s ease-in-out;
   svg {
     font-size: 1.8rem;
   }
   :hover {
-    opacity: 0.9;
+    opacity: 0.8;
+    transition: all 0.2s ease-in-out;
     cursor: pointer;
   }
 `;

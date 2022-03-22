@@ -8,6 +8,7 @@ export const theme = {
     green: "rgba(162, 217, 199, 0.79)",
     yellow: "rgba(252, 255, 81, 0.42);",
     pink: "#DFB9BC",
+    red: "#C80C0C",
   },
   gradients: {
     lemon:

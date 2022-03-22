@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { CenteredContainer } from "../components/Containers";
 import { Divider } from "../components/decorations";
+import { ErrorMessageWrapper } from "../components/errorComponents.js";
 import RoundedButton from "../components/Inputs/RoundedButton";
 import StyledInput from "../components/Inputs/StyledInput";
 import UnderlinedLinkButton from "../components/Inputs/UnderlinedLinkButton";
@@ -12,7 +13,8 @@ const Login = () => {
   const usernameRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorInputs, setErrorInputs] = useState([false, false]); // username, password
 
   const handleLogin = async () => {
     const username = usernameRef.current.value;
@@ -22,6 +24,22 @@ const Login = () => {
       username,
       password,
     };
+
+    let occuredErrors = [false, false];
+    setErrorMessage("");
+
+    if (!username) {
+      occuredErrors[0] = true;
+      setErrorMessage("Both fields need to be filled");
+    }
+    if (!password) {
+      occuredErrors[1] = true;
+      setErrorMessage("Both fields need to be filled");
+    }
+
+    setErrorInputs(occuredErrors);
+    if (occuredErrors.includes(true)) return;
+
     const res = await callApi("auth/signin", data);
     if (res.status === 200) {
       if (res.data.accessToken) {
@@ -37,13 +55,22 @@ const Login = () => {
     <CenteredContainer color="primary">
       <LoginWrapper>
         <HeadingText>Welcome</HeadingText>
-        <StyledInput variant="light" label="Username" ref={usernameRef} />
         <StyledInput
+          isError={errorInputs[0]}
+          variant="light"
+          label="Username"
+          ref={usernameRef}
+        />
+        <StyledInput
+          isError={errorInputs[1]}
           variant="light"
           label="Password"
           type="password"
           ref={passwordRef}
         />
+        <ErrorMessageWrapper>
+          {errorMessage && <p>{errorMessage}</p>}
+        </ErrorMessageWrapper>
         <OptionsWrap>
           <UnderlinedLinkButton
             to="/forgot-password"
