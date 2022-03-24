@@ -1,7 +1,7 @@
 import { CgProfile } from "react-icons/cg";
 import { RiPlayList2Fill, RiDoorOpenLine } from "react-icons/ri";
 import { AiOutlinePlus } from "react-icons/ai";
-import { FiSettings, FiLogOut } from "react-icons/fi";
+import { FiSettings } from "react-icons/fi";
 
 export const links = [
   {
@@ -28,10 +28,5 @@ export const links = [
     icon: <FiSettings />,
     text: "settings",
     to: "/settings",
-  },
-  {
-    icon: <FiLogOut />,
-    text: "logout",
-    to: "/logout",
   },
 ];

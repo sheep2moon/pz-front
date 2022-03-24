@@ -18,28 +18,32 @@ const SidebarLink = ({ to, text, Icon, isOpen }) => {
 export default SidebarLink;
 
 const StyledLink = styled(Link)`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
   align-items: center;
-  margin: 0.25rem 0;
-  padding: 0.25rem 0;
+  width: 100%;
   color: #000;
   text-decoration: none;
   color: ${({ theme }) => theme.colors.darkBlue};
+  overflow: hidden;
+  padding: 0.5rem 0;
   :hover {
-    opacity: 0.8;
+    background-color: ${({ theme }) => theme.colors.lightGray};
   }
   p {
     font-weight: 400;
     overflow: hidden;
     white-space: nowrap;
-  }
-  svg {
-    font-size: 2rem;
-    margin-right: 1rem;
-    font-weight: 400;
+    text-align: start;
   }
 `;
 
 const IconWrap = styled.div`
-  width: 50px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  svg {
+    font-size: 2rem;
+    font-weight: 400;
+  }
 `;

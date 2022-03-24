@@ -3,9 +3,18 @@ import styled from "styled-components";
 import { links } from "./links-config";
 import SidebarLink from "./SidebarLink";
 import { AiOutlineMenu, AiOutlineArrowLeft } from "react-icons/ai";
+import { FiLogOut } from "react-icons/fi";
+import { handleLogout } from "../../helpers/auth";
+import { useNavigate } from "react-router";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/logout");
+  };
 
   return (
     <SidebarContainer isOpen={isOpen}>
@@ -21,6 +30,12 @@ const Sidebar = () => {
             <SidebarLink isOpen={isOpen} Icon={icon} to={to} text={text} />
           );
         })}
+        <LogoutButton onClick={handleLogout}>
+          <IconWrap>
+            <FiLogOut />
+          </IconWrap>
+          {isOpen && <p>logout</p>}
+        </LogoutButton>
       </LinksWrap>
     </SidebarContainer>
   );
@@ -33,29 +48,31 @@ const SidebarContainer = styled.nav`
   top: 0;
   left: 0;
   height: 100vh;
-  width: ${({ isOpen }) => (isOpen ? "240px" : "80px")};
+  width: ${({ isOpen }) => (isOpen ? "240px" : "60px")};
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.primary};
-  padding: 1rem;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
   box-shadow: 0 0 5px #00000040;
+  color: ${({ theme }) => theme.colors.darkBlue};
 `;
 
 const Controls = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
 `;
 const MenuButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.darkGray};
   border: none;
   border-radius: 8px;
   padding: 2px;
   width: ${({ isOpen }) => (isOpen ? "100%" : "auto")};
   margin-bottom: 2rem;
+
   cursor: pointer;
   svg {
     font-size: 2rem;
@@ -65,4 +82,36 @@ const ProfileInfo = styled.div``;
 const LinksWrap = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
+`;
+
+const IconWrap = styled.div`
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  svg {
+    font-size: 2rem;
+    font-weight: 400;
+  }
+`;
+const LogoutButton = styled.button`
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  margin-top: auto;
+  margin-bottom: 1rem;
+  color: ${({ theme }) => theme.colors.darkBlue};
+  padding: 0.5rem 0;
+  cursor: pointer;
+  p {
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: start;
+  }
+  :hover {
+    background-color: ${({ theme }) => theme.colors.lightGray};
+  }
 `;
