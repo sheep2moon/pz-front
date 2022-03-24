@@ -1,15 +1,18 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { CenteredContainer } from "../components/Containers";
+import { useTheme } from "styled-components";
+import { CenteredContainer } from "../components/containers";
 import { Divider } from "../components/decorations";
 import { ErrorMessageWrapper } from "../components/errorComponents.js";
 import RoundedButton from "../components/Inputs/RoundedButton";
 import StyledInput from "../components/Inputs/StyledInput";
 import UnderlinedLinkButton from "../components/Inputs/UnderlinedLinkButton";
 import { callApi } from "../helpers/callApi.js";
+import { theme } from "../theme.js";
 
 const Login = () => {
+  const theme = useTheme();
   const usernameRef = useRef();
   const passwordRef = useRef();
   const navigate = useNavigate();
@@ -19,7 +22,6 @@ const Login = () => {
   const handleLogin = async () => {
     const username = usernameRef.current.value;
     const password = passwordRef.current.value;
-
     const data = {
       username,
       password,
@@ -44,7 +46,7 @@ const Login = () => {
     if (res.status === 200) {
       if (res.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(res.data));
-        navigate("/profile");
+        navigate("/");
       }
     } else {
       setErrorMessage(res.data.message);
@@ -52,7 +54,7 @@ const Login = () => {
   };
 
   return (
-    <CenteredContainer color="primary">
+    <CenteredContainer bg={theme.gradients.lemon}>
       <LoginWrapper>
         <HeadingText>Welcome</HeadingText>
         <StyledInput

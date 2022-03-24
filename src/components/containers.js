@@ -6,8 +6,7 @@ export const CenteredContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background: ${({ theme, color }) =>
-    color === "primary" ? theme.gradients.lemon : theme.gradients.paradise};
+  background: ${({ bg }) => bg};
 `;
 
 export const GradientContainer = styled.div`

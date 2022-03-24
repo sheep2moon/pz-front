@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { CenteredContainer } from "../components/Containers";
+import { useTheme } from "styled-components";
+import { CenteredContainer } from "../components/containers";
 import { Divider } from "../components/decorations";
 import { ErrorMessageWrapper } from "../components/errorComponents.js";
 import RoundedButton from "../components/Inputs/RoundedButton";
@@ -11,6 +12,7 @@ import { callApi } from "../helpers/callApi.js";
 import { validateEmail } from "../helpers/validateEmail.js";
 
 const Register = () => {
+  const theme = useTheme();
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -18,7 +20,6 @@ const Register = () => {
   const navigate = useNavigate();
   const [errorMessages, setErrorMessages] = useState([]);
   const [errorInputs, setErrorInputs] = useState([false, false, false, false]); // username, email, pass1, pass2
-
   const handleRegister = async () => {
     const username = usernameRef.current.value;
     const email = emailRef.current.value;
@@ -75,7 +76,7 @@ const Register = () => {
   };
 
   return (
-    <CenteredContainer>
+    <CenteredContainer bg={theme.gradients.paradise}>
       <HeadingText>Create Account</HeadingText>
       <RegisterWrapper>
         <InputsWrap>

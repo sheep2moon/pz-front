@@ -66,7 +66,7 @@ const MenuButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.darkGray};
+  background-color: ${({ theme }) => theme.colors.lightGray};
   border: none;
   border-radius: 8px;
   padding: 2px;

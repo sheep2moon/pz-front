@@ -15,5 +15,7 @@ export const theme = {
       "linear-gradient(196deg, #A8F0E3 10.45%, rgba(246, 221, 154, 0.4) 138.18%);",
     paradise:
       "linear-gradient(197.58deg, #E8AAAA 8.73%, rgba(154, 224, 246, 0.4) 120.38%);",
+    slava:
+      "linear-gradient(180deg, #B5CCD9 33.96%, rgba(246, 221, 154, 0.4) 133.26%);",
   },
 };
