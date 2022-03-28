@@ -4,7 +4,6 @@ import { links } from "./links-config";
 import SidebarLink from "./SidebarLink";
 import { AiOutlineMenu, AiOutlineArrowLeft } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
-import { handleLogout } from "../../helpers/auth";
 import { useNavigate } from "react-router";
 
 const Sidebar = () => {
@@ -13,7 +12,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    navigate("/logout");
+    navigate("/login");
   };
 
   return (
@@ -27,7 +26,13 @@ const Sidebar = () => {
       <LinksWrap>
         {links.map(({ icon, text, to }) => {
           return (
-            <SidebarLink isOpen={isOpen} Icon={icon} to={to} text={text} />
+            <SidebarLink
+              key={text}
+              isOpen={isOpen}
+              Icon={icon}
+              to={to}
+              text={text}
+            />
           );
         })}
         <LogoutButton onClick={handleLogout}>

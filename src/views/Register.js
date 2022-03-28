@@ -8,7 +8,7 @@ import { ErrorMessageWrapper } from "../components/errorComponents.js";
 import RoundedButton from "../components/Inputs/RoundedButton";
 import StyledInput from "../components/Inputs/StyledInput";
 import UnderlinedLinkButton from "../components/Inputs/UnderlinedLinkButton";
-import { callApi } from "../helpers/callApi.js";
+import { callPostApi } from "../helpers/callApi.js";
 import { validateEmail } from "../helpers/validateEmail.js";
 
 const Register = () => {
@@ -63,7 +63,7 @@ const Register = () => {
       email,
       password: pass1,
     };
-    const res = await callApi("auth/signup", data);
+    const res = await callPostApi("api/auth/signup", data);
     console.log(res);
     if (res.status === 200) {
       navigate("/login");
@@ -114,7 +114,7 @@ const Register = () => {
         </ErrorMessageWrapper>
         <ConfirmWrapper>
           <p>Sign Up</p>
-          <RoundedButton color="pink" onClick={handleRegister} />
+          <RoundedButton color={theme.colors.pink} onClick={handleRegister} />
         </ConfirmWrapper>
         <Divider color="pink" />
         <BottomWrap>

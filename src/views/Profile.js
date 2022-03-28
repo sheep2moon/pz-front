@@ -1,18 +1,71 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import defaultAvatar from "../assets/default-avatar.png";
+import RoundedButton from "../components/Inputs/RoundedButton.js";
+import { getApiHeader } from "../helpers/auth.js";
+import { callPostApi, url } from "../helpers/callApi.js";
+import { changeUsername } from "../redux/userSlice.js";
 
 const Profile = () => {
+  const [chosenOption, setChosenOption] = useState(0);
+  const [avatarImg, setAvatarImg] = useState();
+  const [nickname, setNickname] = useState();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const onFileChange = (e) => {
+    const file = e.target.files[0];
+    setAvatarImg(file);
+  };
+
+  const confirmAvatarUpload = async () => {
+    const formData = new FormData();
+    formData.append("avatar", avatarImg);
+    const res = await callPostApi("api/test/changeavatar", formData, {
+      headers: getApiHeader(),
+    });
+    console.log(res);
+  };
+  const onNickChange = (e) => {
+    setNickname(e.target.value);
+  };
+  const confirmNickChange = async () => {
+    const res = await callPostApi(
+      "api/test/changenick",
+      { newusername: nickname },
+      { headers: getApiHeader() }
+    );
+    console.log(res);
+    if (res.status === 200) {
+      dispatch(changeUsername(nickname));
+    }
+  };
   return (
     <ProfileContainer>
       <h2>Your Account</h2>
       <AvatarWrap>
-        <AvatarImg src={defaultAvatar} />
-        <p>nick</p>
+        <AvatarImg src={url + user.picture} />
+        <p>{user.username}</p>
       </AvatarWrap>
       <OptionsWrap>
-        <Option>Change the photo</Option>
-        <Option>Change the nick</Option>
+        <Option onClick={() => setChosenOption(1)}>Change the photo</Option>
+        {chosenOption === 1 && (
+          <InputWrap>
+            <FileInput type="file" onChange={onFileChange} />
+            <RoundedButton onClick={confirmAvatarUpload} />
+          </InputWrap>
+        )}
+        <Option onClick={() => setChosenOption(2)}>Change the nick</Option>
+        {chosenOption === 2 && (
+          <InputWrap>
+            <NickInput
+              placeholder="new nickname"
+              type="text"
+              onChange={onNickChange}
+            />
+            <RoundedButton onClick={confirmNickChange} />
+          </InputWrap>
+        )}
       </OptionsWrap>
     </ProfileContainer>
   );
@@ -20,6 +73,23 @@ const Profile = () => {
 
 export default Profile;
 
+const InputWrap = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  transition: all 0.5s ease-in-out;
+`;
+
+const FileInput = styled.input``;
+const NickInput = styled.input`
+  flex: 1;
+  margin: 0 0.5rem;
+  border: none;
+  padding: 0.75rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 1.2rem;
+  outline: none;
+`;
 const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -53,6 +123,8 @@ const OptionsWrap = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 4rem;
+  width: 100%;
+  max-width: 320px;
 `;
 const Option = styled.button`
   font-size: 1.2rem;

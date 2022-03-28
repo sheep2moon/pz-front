@@ -1,10 +1,19 @@
 import axios from "axios";
 
-const url = "http://localhost:3000/api/";
+export const url = "http://localhost:3000/";
 
-export const callApi = async (endpoint, data) => {
+export const callPostApi = async (endpoint, data, config = {}) => {
   try {
-    const res = await axios.post(url + endpoint, { ...data });
+    const res = await axios.post(url + endpoint, { ...data }, config);
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const callGetApi = async (endpoint, config = {}) => {
+  try {
+    const res = await axios.get(url + endpoint, config);
     return res;
   } catch (error) {
     return error.response;

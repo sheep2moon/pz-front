@@ -20,12 +20,7 @@ const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${({ theme, color }) =>
-    color === "yellow"
-      ? theme.colors.yellow
-      : color === "green"
-      ? theme.colors.green
-      : theme.colors.pink};
+  background: ${({ color }) => color};
   transition: all 0.2s ease-in-out;
   svg {
     font-size: 1.8rem;

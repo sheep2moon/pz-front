@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { useTheme } from "styled-components";
@@ -8,8 +9,8 @@ import { ErrorMessageWrapper } from "../components/errorComponents.js";
 import RoundedButton from "../components/Inputs/RoundedButton";
 import StyledInput from "../components/Inputs/StyledInput";
 import UnderlinedLinkButton from "../components/Inputs/UnderlinedLinkButton";
-import { callApi } from "../helpers/callApi.js";
-import { theme } from "../theme.js";
+import { callPostApi } from "../helpers/callApi.js";
+import { fetchUserData } from "../redux/userSlice.js";
 
 const Login = () => {
   const theme = useTheme();
@@ -18,6 +19,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [errorInputs, setErrorInputs] = useState([false, false]); // username, password
+  const dispatch = useDispatch();
 
   const handleLogin = async () => {
     const username = usernameRef.current.value;
@@ -42,10 +44,11 @@ const Login = () => {
     setErrorInputs(occuredErrors);
     if (occuredErrors.includes(true)) return;
 
-    const res = await callApi("auth/signin", data);
+    const res = await callPostApi("api/auth/signin", data);
     if (res.status === 200) {
       if (res.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(res.data));
+        dispatch(fetchUserData());
         navigate("/");
       }
     } else {
@@ -79,7 +82,7 @@ const Login = () => {
             text="Forgot password?"
             color="green"
           />
-          <RoundedButton color="green" onClick={handleLogin} />
+          <RoundedButton color={theme.colors.green} onClick={handleLogin} />
         </OptionsWrap>
         <Divider color="green" />
         <BottomButtonsWrap>

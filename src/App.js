@@ -10,8 +10,19 @@ import styled from "styled-components";
 import NewRoom from "./views/NewRoom.js";
 import JoinRoom from "./views/JoinRoom.js";
 import Settings from "./views/Settings.js";
+import { useEffect } from "react";
+import { isUserLoggedIn } from "./helpers/auth.js";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserData } from "./redux/userSlice.js";
 
 function App() {
+  const { username } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isUserLoggedIn() && !username) dispatch(fetchUserData());
+  }, [username, dispatch]);
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
