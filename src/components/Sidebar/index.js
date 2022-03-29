@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { links } from "./links-config";
 import SidebarLink from "./SidebarLink";
 import { AiOutlineMenu, AiOutlineArrowLeft } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
+import { FiLogOut, FiLogIn } from "react-icons/fi";
 import { useNavigate } from "react-router";
+import { isUserLoggedIn } from "../../helpers/auth";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,12 +36,22 @@ const Sidebar = () => {
             />
           );
         })}
-        <LogoutButton onClick={handleLogout}>
-          <IconWrap>
-            <FiLogOut />
-          </IconWrap>
-          {isOpen && <p>logout</p>}
-        </LogoutButton>
+        {isUserLoggedIn() ? (
+          <LogoutButton onClick={handleLogout}>
+            <IconWrap>
+              <FiLogOut />
+            </IconWrap>
+            {isOpen && <p>logout</p>}
+          </LogoutButton>
+        ) : (
+          <SidebarLink
+            Icon={<FiLogIn />}
+            isOpen={isOpen}
+            to="/login"
+            text="Login"
+            placeBottom={true}
+          />
+        )}
       </LinksWrap>
     </SidebarContainer>
   );
