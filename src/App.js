@@ -15,6 +15,7 @@ import { isUserLoggedIn } from "./helpers/auth.js";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData } from "./redux/userSlice.js";
 import RequireAuth from "./router/RequireAuth";
+import Friends from "./views/Friends.js";
 
 function App() {
   const { username } = useSelector((state) => state.user);
@@ -33,11 +34,9 @@ function App() {
             <Route exact path="/" element={<Dashboard />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/register" element={<Register />} />
-            <Route element={<RequireAuth to="/profile" />}>
-              <Route exact path="/profile" element={<Profile />} />
-            </Route>
-            <Route element={<RequireAuth to="/new-room" />}>
-              <Route exact path="/new-room" element={<NewRoom />} />
+            <Route element={<RequireAuth />}>
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/friends" element={<Friends />} />
             </Route>
             <Route exact path="/join-the-room" element={<JoinRoom />} />
             <Route exact path="/settings" element={<Settings />} />

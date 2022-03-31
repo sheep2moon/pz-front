@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { links } from "./links-config";
 import SidebarLink from "./SidebarLink";
-import { AiOutlineMenu, AiOutlineArrowLeft } from "react-icons/ai";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
 import { useNavigate } from "react-router";
 import { isUserLoggedIn } from "../../helpers/auth";
 import ProfileInfo from "./ProfileInfo";
+import HamburgerIcon from "./HamburgerIcon.js";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +21,7 @@ const Sidebar = () => {
     <SidebarContainer isOpen={isOpen}>
       <Controls>
         <MenuButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <AiOutlineArrowLeft /> : <AiOutlineMenu />}
+          <HamburgerIcon isOpen={isOpen} />
         </MenuButton>
       </Controls>
       {isOpen && <ProfileInfo />}
@@ -83,7 +83,7 @@ const MenuButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.lightGray};
+  background-color: ${({ theme }) => theme.colors.primary};
   border: none;
   border-radius: 8px;
   padding: 2px;
@@ -91,9 +91,6 @@ const MenuButton = styled.button`
   margin-bottom: 2rem;
 
   cursor: pointer;
-  svg {
-    font-size: 2rem;
-  }
 `;
 const LinksWrap = styled.div`
   display: flex;
