@@ -3,10 +3,10 @@ import styled from "styled-components";
 import CreateButton from "./CreateButton.js";
 import { SectionWrapper } from "./styledElements.js";
 
-const Rooms = () => {
+const Rooms = ({ setIsNewRoomModal }) => {
   return (
     <SectionWrapper>
-      <CreateButton />
+      <CreateButton onClick={() => setIsNewRoomModal(true)} />
     </SectionWrapper>
   );
 };

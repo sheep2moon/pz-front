@@ -7,7 +7,6 @@ import Profile from "./views/Profile.js";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./views/Dashboard.js";
 import styled from "styled-components";
-import NewRoom from "./views/NewRoom.js";
 import JoinRoom from "./views/JoinRoom.js";
 import Settings from "./views/Settings.js";
 import { useEffect } from "react";

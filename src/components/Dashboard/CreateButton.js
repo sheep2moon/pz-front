@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
 
-const CreateButton = () => {
+const CreateButton = ({ ...rest }) => {
   return (
-    <AddNewButton>
+    <AddNewButton {...rest}>
       <p>Create</p>
       <AiOutlinePlus />
     </AddNewButton>

@@ -34,17 +34,17 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   max-width: 385px;
-  margin-top: 1.5rem;
+  margin-top: 1.8rem;
   display: flex;
 `;
 
 const Label = styled.label`
   pointer-events: none;
   transition: all 0.5s ease-in-out;
-  font-size: ${({ isFocused }) => (isFocused ? "1.1rem" : "1.4rem")};
+  font-size: ${({ isFocused }) => (isFocused ? "1rem" : "1.4rem")};
   position: absolute;
-  top: ${({ isFocused }) => (isFocused ? "-1rem" : "50%")};
-  left: ${({ isFocused }) => (isFocused ? "0.5rem" : "1rem")};
+  top: ${({ isFocused }) => (isFocused ? "-1.1rem" : "50%")};
+  left: ${({ isFocused }) => (isFocused ? "0.2rem" : "1rem")};
   transform: ${({ isFocused }) => (isFocused ? "none" : "translateY(-50%)")};
   opacity: ${({ isFocused }) => (isFocused ? "1" : "0.8")};
   color: ${({ variant }) => (variant === "light" ? "#000" : "#fff")};

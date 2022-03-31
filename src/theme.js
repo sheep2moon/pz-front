@@ -6,6 +6,7 @@ export const theme = {
     darkBlue: "#2E5663",
     darkGray: "#00000020",
     textGraphite: "#49687B",
+    backdrop: "rgba(151, 148, 148, 0.85)",
     lightGray: "#00000010",
     green: "rgba(162, 217, 199, 0.79)",
     yellow: "rgba(252, 255, 81, 0.42);",

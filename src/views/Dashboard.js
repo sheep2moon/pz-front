@@ -1,25 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTheme } from "styled-components";
 import { CenteredContainer } from "../components/containers";
+import NewRoom from "../components/Dashboard/NewRoom.js";
 import Playlists from "../components/Dashboard/Playlists.js";
 import Rooms from "../components/Dashboard/Rooms.js";
 
 const Dashboard = () => {
   const theme = useTheme();
+  const [isNewRoomModal, setIsNewRoomModal] = useState(false);
+
   return (
-    <CenteredContainer bg={theme.gradients.slava}>
-      <DashboardWrapper>
-        <Section>
-          <h2>playlists</h2>
-          <Playlists />
-        </Section>
-        <Section>
-          <h2>rooms</h2>
-          <Rooms />
-        </Section>
-      </DashboardWrapper>
-    </CenteredContainer>
+    <>
+      {isNewRoomModal && <NewRoom setIsNewRoomModal={setIsNewRoomModal} />}
+      <CenteredContainer bg={theme.gradients.slava}>
+        <DashboardWrapper>
+          <Section>
+            <h2>playlists</h2>
+            <Playlists />
+          </Section>
+          <Section>
+            <h2>rooms</h2>
+            <Rooms setIsNewRoomModal={setIsNewRoomModal} />
+          </Section>
+        </DashboardWrapper>
+      </CenteredContainer>
+    </>
   );
 };
 

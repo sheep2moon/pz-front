@@ -34,6 +34,7 @@ const Sidebar = () => {
               Icon={icon}
               to={to}
               text={text}
+              placeBottom={false}
             />
           );
         })}
