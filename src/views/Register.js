@@ -40,10 +40,16 @@ const Register = () => {
       setErrorMessages(alertMessages);
       return;
     }
+
     //email format
     if (!validateEmail(email)) {
       alertMessages.push("Email is incorrect.");
       occuredErrors[1] = true;
+    }
+    //password length
+    if (pass1.length < 6) {
+      occuredErrors[2] = true;
+      alertMessages.push("Password too short, enter at least 6 characters.");
     }
     //passwords match
     if (pass1 !== pass2) {

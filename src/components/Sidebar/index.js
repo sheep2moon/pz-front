@@ -6,6 +6,7 @@ import { AiOutlineMenu, AiOutlineArrowLeft } from "react-icons/ai";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
 import { useNavigate } from "react-router";
 import { isUserLoggedIn } from "../../helpers/auth";
+import ProfileInfo from "./ProfileInfo";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +24,7 @@ const Sidebar = () => {
           {isOpen ? <AiOutlineArrowLeft /> : <AiOutlineMenu />}
         </MenuButton>
       </Controls>
-      <ProfileInfo />
+      {isOpen && <ProfileInfo />}
       <LinksWrap>
         {links.map(({ icon, text, to }) => {
           return (
@@ -94,7 +95,6 @@ const MenuButton = styled.button`
     font-size: 2rem;
   }
 `;
-const ProfileInfo = styled.div``;
 const LinksWrap = styled.div`
   display: flex;
   flex-direction: column;
