@@ -4,10 +4,10 @@ import styled from "styled-components";
 import CreateButton from "./CreateButton.js";
 import { SectionWrapper } from "./styledElements.js";
 
-const Playlists = () => {
+const Playlists = ({ setIsNewPlaylistModal }) => {
   return (
     <SectionWrapper>
-      <CreateButton />
+      <CreateButton onClick={() => setIsNewPlaylistModal(true)} />
     </SectionWrapper>
   );
 };

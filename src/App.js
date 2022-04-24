@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData } from "./redux/userSlice.js";
 import RequireAuth from "./router/RequireAuth";
 import Friends from "./views/Friends.js";
+import Room from "./views/Room";
 
 function App() {
   const { username } = useSelector((state) => state.user);
@@ -39,6 +40,7 @@ function App() {
             </Route>
             <Route exact path="/join-the-room" element={<JoinRoom />} />
             <Route exact path="/settings" element={<Settings />} />
+            <Route exact path="/room" element={<Room />} />
           </Routes>
         </SidebarOffset>
       </Router>

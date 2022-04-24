@@ -3,6 +3,7 @@ export const theme = {
     primary: "#C8DFEC", //blue
     white: "#f3f3f3",
     white80: "#ffffff80",
+    blue: "#DCF2FF",
     darkBlue: "#2E5663",
     darkGray: "#00000020",
     textGraphite: "#49687B",
@@ -12,6 +13,7 @@ export const theme = {
     yellow: "rgba(252, 255, 81, 0.42);",
     pink: "#DFB9BC",
     red: "#C80C0C",
+    playerBg: "#41454E",
   },
   gradients: {
     lemon:

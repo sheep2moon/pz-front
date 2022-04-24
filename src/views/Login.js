@@ -57,7 +57,7 @@ const Login = () => {
   };
 
   return (
-    <CenteredContainer bg={theme.gradients.lemon} fullwidth={true}>
+    <CenteredContainer bg={theme.gradients.lemon}>
       <LoginWrapper>
         <HeadingText>Welcome</HeadingText>
         <StyledInput

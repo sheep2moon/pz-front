@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTheme } from "styled-components";
 import { CenteredContainer } from "../components/containers";
+import NewPlaylist from "../components/Dashboard/NewPlaylist";
 import NewRoom from "../components/Dashboard/NewRoom.js";
 import Playlists from "../components/Dashboard/Playlists.js";
 import Rooms from "../components/Dashboard/Rooms.js";
@@ -9,15 +10,19 @@ import Rooms from "../components/Dashboard/Rooms.js";
 const Dashboard = () => {
   const theme = useTheme();
   const [isNewRoomModal, setIsNewRoomModal] = useState(false);
+  const [isNewPlaylistModal, setIsNewPlaylistModal] = useState(false);
 
   return (
     <>
       {isNewRoomModal && <NewRoom setIsNewRoomModal={setIsNewRoomModal} />}
+      {isNewPlaylistModal && (
+        <NewPlaylist setIsNewPlaylistModal={setIsNewPlaylistModal} />
+      )}
       <CenteredContainer bg={theme.gradients.slava}>
         <DashboardWrapper>
           <Section>
             <h2>playlists</h2>
-            <Playlists />
+            <Playlists setIsNewPlaylistModal={setIsNewPlaylistModal} />
           </Section>
           <Section>
             <h2>rooms</h2>
