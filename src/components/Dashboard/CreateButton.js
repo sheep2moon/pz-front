@@ -21,6 +21,8 @@ const AddNewButton = styled.div`
   background-color: #ffffff83;
   border-radius: 29px;
   padding: 2rem 2rem;
+  width: 140px;
+  height: 140px;
   color: ${({ theme }) => theme.colors.textGraphite};
   outline: none;
   transition: all 0.1s ease-in-out;

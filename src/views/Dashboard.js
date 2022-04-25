@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useTheme } from "styled-components";
 import { CenteredContainer } from "../components/containers";
@@ -11,6 +12,7 @@ const Dashboard = () => {
   const theme = useTheme();
   const [isNewRoomModal, setIsNewRoomModal] = useState(false);
   const [isNewPlaylistModal, setIsNewPlaylistModal] = useState(false);
+  const user = useSelector((state) => state.user);
 
   return (
     <>
@@ -26,7 +28,7 @@ const Dashboard = () => {
           </Section>
           <Section>
             <h2>rooms</h2>
-            <Rooms setIsNewRoomModal={setIsNewRoomModal} />
+            <Rooms setIsNewRoomModal={setIsNewRoomModal} rooms={user.rooms} />
           </Section>
         </DashboardWrapper>
       </CenteredContainer>

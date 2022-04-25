@@ -6,9 +6,9 @@ import styled from "styled-components";
 // import { AiOutlinePlus } from "react-icons/ai";
 // import { FiSettings, FiLogOut } from "react-icons/fi";
 
-const SidebarLink = ({ to, text, Icon, isOpen, placeBottom }) => {
+const SidebarLink = ({ to, text, Icon, isOpen }) => {
   return (
-    <StyledLink to={to} placeBottom={placeBottom}>
+    <StyledLink to={to}>
       <IconWrap>{Icon}</IconWrap>
       {isOpen && <p>{text}</p>}
     </StyledLink>
@@ -27,7 +27,6 @@ const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.colors.darkBlue};
   overflow: hidden;
   padding: 0.5rem 0;
-  margin-top: ${({ placeBottom }) => (placeBottom ? "auto" : "0")};
   :hover {
     background-color: ${({ theme }) => theme.colors.lightGray};
   }

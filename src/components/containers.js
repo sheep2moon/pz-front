@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const CenteredContainer = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   flex-direction: column;

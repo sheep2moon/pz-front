@@ -1,34 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { FiUsers } from "react-icons/fi";
 import { RiUserAddLine } from "react-icons/ri";
+import { url } from "../../helpers/callApi.js";
 
-const temporaryMemberList = [
-  {
-    username: "Konrad",
-    avatarUrl: "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
-  },
-  {
-    username: "Anhelina",
-    avatarUrl: "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
-  },
-  {
-    username: "Aleksander",
-    avatarUrl: "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
-  },
-  {
-    username: "Piotr",
-    avatarUrl: "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
-  },
-  {
-    username: "Szymon",
-    avatarUrl: "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
-  },
-];
-
-const FriendsSidebar = () => {
-  const [memberList, setMemberList] = useState(temporaryMemberList);
-
+const MembersSidebar = ({ members }) => {
   return (
     <SidebarContainer>
       <SectionWrap>
@@ -37,12 +13,13 @@ const FriendsSidebar = () => {
           <p>list of members</p>
         </TitleBar>
         <MembersWrap>
-          {memberList.map((member) => (
-            <Member>
-              <img src={member.avatarUrl} alt="awatar uzytkownika" />
-              <p>{member.username}</p>
-            </Member>
-          ))}
+          {members &&
+            members.map((member, index) => (
+              <Member key={member.username}>
+                <img src={url + member.avatar} alt="awatar uzytkownika" />
+                <p>{member.username}</p>
+              </Member>
+            ))}
         </MembersWrap>
       </SectionWrap>
       <SectionWrap>
@@ -55,7 +32,7 @@ const FriendsSidebar = () => {
   );
 };
 
-export default FriendsSidebar;
+export default MembersSidebar;
 
 const SidebarContainer = styled.div`
   position: fixed;

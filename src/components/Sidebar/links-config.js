@@ -1,6 +1,6 @@
 import { CgProfile } from "react-icons/cg";
 import { RiPlayList2Fill, RiDoorOpenLine } from "react-icons/ri";
-import { AiOutlinePlus } from "react-icons/ai";
+
 import { FiSettings, FiUsers } from "react-icons/fi";
 
 export const links = [
@@ -23,11 +23,6 @@ export const links = [
     icon: <FiUsers />,
     text: "friends",
     to: "/friends",
-  },
-  {
-    icon: <AiOutlinePlus />,
-    text: "join the room",
-    to: "/join-the-room",
   },
   {
     icon: <FiSettings />,

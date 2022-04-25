@@ -1,20 +1,48 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import StyledInput from "../Inputs/StyledInput.js";
 import RoundedButton from "../Inputs/RoundedButton.js";
+import { callPostApi, joinTheRoom } from "../../helpers/callApi.js";
+import { getApiHeader } from "../../helpers/auth.js";
+import { useDispatch } from "react-redux";
+import { fetchUserData } from "../../redux/userSlice.js";
+import { updateAccessCode, updateRoomData } from "../../redux/roomSlice.js";
+import { useNavigate } from "react-router";
 
 const NewRoom = ({ setIsNewRoomModal }) => {
+  const roomNameRef = useRef();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleCreateRoom = async () => {
+    const name = roomNameRef.current.value;
+    const res = await callPostApi(
+      "api/test/createroom",
+      { name: name },
+      { headers: getApiHeader() }
+    );
+    if (res.status === 200) {
+      console.log("new-room res: ", res.data);
+      setIsNewRoomModal(false);
+      dispatch(fetchUserData());
+      dispatch(updateRoomData(res.data.code));
+      dispatch(updateAccessCode(res.data.code));
+      joinTheRoom(res.data.code);
+      navigate("/room");
+    }
+  };
+
   return (
     <Backdrop onClick={() => setIsNewRoomModal(false)}>
       <ModalWrap onClick={(e) => e.stopPropagation()}>
         <NewRoomIcon>
           <AiOutlineAppstoreAdd />
         </NewRoomIcon>
-        <StyledInput label="Room name" />
+        <StyledInput label="Room name" ref={roomNameRef} />
         <ConfirmWrap>
           <p>Continue</p>
-          <RoundedButton />
+          <RoundedButton onClick={() => handleCreateRoom()} />
         </ConfirmWrap>
       </ModalWrap>
     </Backdrop>

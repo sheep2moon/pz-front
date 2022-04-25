@@ -6,11 +6,14 @@ import { FiLogOut, FiLogIn } from "react-icons/fi";
 import { useNavigate } from "react-router";
 import { isUserLoggedIn } from "../../helpers/auth";
 import ProfileInfo from "./ProfileInfo";
+import { AiOutlinePlus } from "react-icons/ai";
 import HamburgerIcon from "./HamburgerIcon.js";
+import JoinRoom from "../Dashboard/JoinRoom.js";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const [joiningRoom, setJoiningRoom] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -18,44 +21,53 @@ const Sidebar = () => {
   };
 
   return (
-    <SidebarContainer isOpen={isOpen}>
-      <Controls>
-        <MenuButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
-          <HamburgerIcon isOpen={isOpen} />
-        </MenuButton>
-      </Controls>
-      {isOpen && <ProfileInfo />}
-      <LinksWrap>
-        {links.map(({ icon, text, to }) => {
-          return (
+    <>
+      {joiningRoom && <JoinRoom setJoiningRoom={setJoiningRoom} />}
+      <SidebarContainer isOpen={isOpen}>
+        <Controls>
+          <MenuButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
+            <HamburgerIcon isOpen={isOpen} />
+          </MenuButton>
+        </Controls>
+        {isOpen && isUserLoggedIn() && <ProfileInfo />}
+        <LinksWrap>
+          {links.map(({ icon, text, to }) => {
+            return (
+              <SidebarLink
+                key={text}
+                isOpen={isOpen}
+                Icon={icon}
+                to={to}
+                text={text}
+              />
+            );
+          })}
+          {isUserLoggedIn() && (
+            <JoinRoomButton onClick={() => setJoiningRoom(true)}>
+              <IconWrap>
+                <AiOutlinePlus />
+              </IconWrap>
+              {isOpen && <p>join the room</p>}
+            </JoinRoomButton>
+          )}
+          {isUserLoggedIn() ? (
+            <LogoutButton onClick={handleLogout}>
+              <IconWrap>
+                <FiLogOut />
+              </IconWrap>
+              {isOpen && <p>logout</p>}
+            </LogoutButton>
+          ) : (
             <SidebarLink
-              key={text}
+              Icon={<FiLogIn />}
               isOpen={isOpen}
-              Icon={icon}
-              to={to}
-              text={text}
-              placeBottom={false}
+              to="/login"
+              text="login"
             />
-          );
-        })}
-        {isUserLoggedIn() ? (
-          <LogoutButton onClick={handleLogout}>
-            <IconWrap>
-              <FiLogOut />
-            </IconWrap>
-            {isOpen && <p>logout</p>}
-          </LogoutButton>
-        ) : (
-          <SidebarLink
-            Icon={<FiLogIn />}
-            isOpen={isOpen}
-            to="/login"
-            text="Login"
-            placeBottom={true}
-          />
-        )}
-      </LinksWrap>
-    </SidebarContainer>
+          )}
+        </LinksWrap>
+      </SidebarContainer>
+    </>
   );
 };
 
@@ -97,6 +109,7 @@ const LinksWrap = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  transition: all 0.1s ease-in-out;
 `;
 
 const IconWrap = styled.div`
@@ -114,7 +127,27 @@ const LogoutButton = styled.button`
   align-items: center;
   background-color: transparent;
   border: none;
-  margin-top: auto;
+  margin-bottom: 1rem;
+  color: ${({ theme }) => theme.colors.darkBlue};
+  padding: 0.5rem 0;
+  cursor: pointer;
+  p {
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: start;
+  }
+  :hover {
+    background-color: ${({ theme }) => theme.colors.lightGray};
+  }
+`;
+
+const JoinRoomButton = styled.button`
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  align-items: center;
+  background-color: transparent;
+  border: none;
   margin-bottom: 1rem;
   color: ${({ theme }) => theme.colors.darkBlue};
   padding: 0.5rem 0;

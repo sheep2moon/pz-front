@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 
 const StyledInput = forwardRef(({ variant, label, isError, ...rest }, ref) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -9,6 +9,15 @@ const StyledInput = forwardRef(({ variant, label, isError, ...rest }, ref) => {
     if (e.target.value.length > 0) setIsFocused(true);
     else setIsFocused(false);
   };
+
+  useEffect(() => {
+    console.log(ref);
+    if (ref.current.value.length > 0) setIsFocused(true);
+  }, []);
+  const handleChange = () => {
+    console.log(ref.current.value);
+  };
+
   return (
     <Wrapper>
       <Label isFocused={isFocused} htmlFor={label} variant={variant}>
@@ -17,8 +26,8 @@ const StyledInput = forwardRef(({ variant, label, isError, ...rest }, ref) => {
       <Input
         isError={isError}
         ref={ref}
-        name={label}
         autoComplete="new-password"
+        onChange={handleChange}
         {...rest}
         variant={variant}
         onFocus={handleFocus}
@@ -59,6 +68,6 @@ const Input = styled.input`
   outline: ${({ theme, isError }) =>
     isError ? `1px solid ${theme.colors.red}` : "none"};
   background-color: ${({ theme, variant }) =>
-    variant === "light" ? theme.colors.lightGray : theme.colors.darkGray};
+    variant === "light" ? theme.colors.white80 : theme.colors.darkGray};
   border-radius: 0.5rem;
 `;

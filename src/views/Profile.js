@@ -17,12 +17,15 @@ const Profile = () => {
     const file = e.target.files[0];
     setAvatarImg(file);
   };
+
   const confirmAvatarUpload = async () => {
     const formData = new FormData();
     formData.append("avatar", avatarImg);
+    console.log(formData);
     const res = await callPostApi("api/test/changeavatar", formData, {
       headers: getApiHeader(),
     });
+    console.log(res);
     if (res === 200) {
       console.log("avatar changed");
     }

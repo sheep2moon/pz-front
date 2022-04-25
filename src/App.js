@@ -7,7 +7,6 @@ import Profile from "./views/Profile.js";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./views/Dashboard.js";
 import styled from "styled-components";
-import JoinRoom from "./views/JoinRoom.js";
 import Settings from "./views/Settings.js";
 import { useEffect } from "react";
 import { isUserLoggedIn } from "./helpers/auth.js";
@@ -31,16 +30,15 @@ function App() {
         <Sidebar />
         <SidebarOffset>
           <Routes>
-            <Route exact path="/" element={<Dashboard />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/register" element={<Register />} />
             <Route element={<RequireAuth />}>
+              <Route exact path="/" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/friends" element={<Friends />} />
+              <Route exact path="/settings" element={<Settings />} />
+              <Route path="/room" element={<Room />} />
             </Route>
-            <Route exact path="/join-the-room" element={<JoinRoom />} />
-            <Route exact path="/settings" element={<Settings />} />
-            <Route exact path="/room" element={<Room />} />
           </Routes>
         </SidebarOffset>
       </Router>

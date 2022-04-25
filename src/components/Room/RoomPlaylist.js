@@ -9,7 +9,7 @@ const RoomPlaylist = ({ playlist }) => {
       <h2>PlaylistName</h2>
       <Songs>
         {playlist.map((song) => (
-          <SongWrap>
+          <SongWrap key={song.title}>
             <Cover src={song.coverUrl} />
             <About>
               <p>{song.title}</p>

@@ -50,7 +50,9 @@ const PlayerContainer = styled.div`
   right: 0;
   height: 100px;
   background-color: ${({ theme }) => theme.colors.playerBg};
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  justify-items: start;
   color: #fff;
 `;
 const AboutWrapper = styled.div`

@@ -3,9 +3,7 @@ import { getApiHeader } from "../helpers/auth.js";
 import { callGetApi } from "../helpers/callApi.js";
 
 export const fetchUserData = createAsyncThunk("api/user", async (ThunkApi) => {
-  console.log("redux");
   const res = await callGetApi("api/test/user", { headers: getApiHeader() });
-  console.log(res);
   return res.data;
 });
 
@@ -50,7 +48,7 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchUserData.fulfilled, (state, action) => {
       const data = action.payload;
-      console.log(action.payload);
+      console.log("builder: ", action.payload);
       if (data) {
         state.id = data.id;
         state.username = data.username;
