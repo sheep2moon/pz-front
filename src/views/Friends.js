@@ -4,7 +4,8 @@ import { useTheme } from "styled-components";
 import { CenteredContainer } from "../components/containers.js";
 import StyledInput from "../components/Inputs/StyledInput.js";
 import tempAvatar from "../assets/player/tempCover.jpeg";
-import { searchUsers } from "../helpers/callApi.js";
+import { addToFriends, searchUsers, showFriends } from "../helpers/callApi.js";
+import { IoPersonAddOutline } from "react-icons/io";
 
 const tempFriends = [
   {
@@ -20,13 +21,27 @@ const tempFriends = [
 const Friends = () => {
   const theme = useTheme();
   const searchRef = useRef();
-  const allFriends = tempFriends;
-  const [friendList, setFriendsList] = useState(tempFriends);
   const [fetchedUsers, setFetchedUsers] = useState([]);
+  const [friends, setFriends] = useState([]);
+
+  const fetchFriends = async () => {
+    const res = await showFriends();
+    return res.data;
+  };
+
+  useEffect(() => {
+    const friends = fetchFriends();
+    setFriends(friends);
+  }, []);
 
   const handleSearch = async (e) => {
     const res = searchUsers(e.target.value);
-    console.log(res);
+    setFetchedUsers(res.data);
+  };
+
+  const handleAddFriend = async (username) => {
+    const res = await addToFriends(username);
+    console.log("FRIENDS.js :", res);
   };
 
   return (
@@ -41,23 +56,30 @@ const Friends = () => {
             />
           </SearchWrap>
           <UsersWrap>
-            {fetchedUsers.map((user) => (
-              <User>
-                <img src={user.avatar} alt="user avatar" />
-                <p>{user.username}</p>
-              </User>
-            ))}
+            {fetchedUsers &&
+              fetchedUsers.map((user) => (
+                <User>
+                  <img src={user.avatar} alt="user avatar" />
+                  <p>{user.username}</p>
+                  <AddToFriendsBtn
+                    onClick={() => handleAddFriend(user.username)}
+                  >
+                    <IoPersonAddOutline />
+                  </AddToFriendsBtn>
+                </User>
+              ))}
           </UsersWrap>
         </UsersContainer>
         <FriendsContainer>
           <h2>Your Friends</h2>
           <UsersWrap>
-            {friendList.map((friend) => (
-              <Friend key={friend.username}>
-                <img src={friend.avatar} alt="user avatar" />
-                <p>{friend.username}</p>
-              </Friend>
-            ))}
+            {friends &&
+              friends.map((friend) => (
+                <Friend key={friend.username}>
+                  <img src={friend.avatar} alt="user avatar" />
+                  <p>{friend.username}</p>
+                </Friend>
+              ))}
           </UsersWrap>
         </FriendsContainer>
       </MainContainer>
@@ -104,6 +126,29 @@ const Friend = styled.div`
   margin: 0.25rem 0;
   display: grid;
   grid-template-columns: 1fr 3fr;
+  background-color: ${({ theme }) => theme.colors.white80};
+  align-items: center;
+  border-radius: 0.25rem;
+  img {
+    width: 60px;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+  }
+`;
+
+const AddToFriendsBtn = styled.button`
+  width: 30px;
+  height: 30px;
+  border-radius: 0.25rem;
+  svg {
+    font-size: 1.4rem;
+  }
+`;
+const User = styled.div`
+  width: 100%;
+  margin: 0.25rem 0;
+  display: grid;
+  grid-template-columns: 1fr 3fr 0.5fr;
   background-color: ${({ theme }) => theme.colors.white80};
   align-items: center;
   border-radius: 0.25rem;

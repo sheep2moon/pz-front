@@ -47,6 +47,30 @@ export const searchUsers = async (searchTerm) => {
   }
 };
 
+export const addToFriends = async (username) => {
+  try {
+    const res = await callPostApi(
+      "api/test/addfriend",
+      { friendname: username },
+      { headers: getApiHeader() }
+    );
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+export const showFriends = async () => {
+  try {
+    const res = await callGetApi("api/showfriends", {
+      headers: getApiHeader(),
+    });
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const leaveTheRoom = async (code) => {
   try {
     const res = await callPostApi(

@@ -16,6 +16,7 @@ export const userSlice = createSlice({
     picture: "",
     playlists: [],
     rooms: [],
+    friends: [],
   },
   reducers: {
     // updateUser: (state, action) => {
@@ -44,6 +45,9 @@ export const userSlice = createSlice({
     changePicture: (state, action) => {
       state.picture = action.payload;
     },
+    updateFriends: (state, action) => {
+      state.friends = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserData.fulfilled, (state, action) => {
@@ -67,5 +71,6 @@ export const {
   removePlaylist,
   changeUsername,
   changePicture,
+  updateFriends,
 } = userSlice.actions;
 export default userSlice.reducer;
