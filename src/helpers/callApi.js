@@ -38,7 +38,7 @@ export const searchUsers = async (searchTerm) => {
   try {
     const res = await callPostApi(
       "api/test/searchusers",
-      { searchTerm },
+      { searchterm: searchTerm },
       { headers: getApiHeader() }
     );
     return res;
