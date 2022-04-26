@@ -35,10 +35,10 @@ function App() {
             <Route element={<RequireAuth />}>
               <Route exact path="/" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/friends" element={<Friends />} />
               <Route exact path="/settings" element={<Settings />} />
               <Route path="/room" element={<Room />} />
             </Route>
+            <Route path="/friends" element={<Friends />} />
           </Routes>
         </SidebarOffset>
       </Router>

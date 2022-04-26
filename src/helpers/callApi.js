@@ -34,6 +34,19 @@ export const joinTheRoom = async (code) => {
   }
 };
 
+export const searchUsers = async (searchTerm) => {
+  try {
+    const res = await callPostApi(
+      "/api/test/searchusers",
+      { searchTerm },
+      { headers: getApiHeader() }
+    );
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 export const leaveTheRoom = async (code) => {
   try {
     const res = await callPostApi(
