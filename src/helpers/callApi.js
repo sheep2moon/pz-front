@@ -37,7 +37,7 @@ export const joinTheRoom = async (code) => {
 export const searchUsers = async (searchTerm) => {
   try {
     const res = await callPostApi(
-      "/api/test/searchusers",
+      "api/test/searchusers",
       { searchTerm },
       { headers: getApiHeader() }
     );

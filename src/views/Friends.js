@@ -22,6 +22,7 @@ const Friends = () => {
   const searchRef = useRef();
   const allFriends = tempFriends;
   const [friendList, setFriendsList] = useState(tempFriends);
+  const [fetchedUsers, setFetchedUsers] = useState([]);
 
   const handleSearch = async (e) => {
     const res = searchUsers(e.target.value);
@@ -39,17 +40,25 @@ const Friends = () => {
               onChange={(e) => handleSearch(e)}
             />
           </SearchWrap>
+          <UsersWrap>
+            {fetchedUsers.map((user) => (
+              <User>
+                <img src={user.avatar} alt="user avatar" />
+                <p>{user.username}</p>
+              </User>
+            ))}
+          </UsersWrap>
         </UsersContainer>
         <FriendsContainer>
           <h2>Your Friends</h2>
-          <FriendsWrap>
+          <UsersWrap>
             {friendList.map((friend) => (
               <Friend key={friend.username}>
                 <img src={friend.avatar} alt="user avatar" />
                 <p>{friend.username}</p>
               </Friend>
             ))}
-          </FriendsWrap>
+          </UsersWrap>
         </FriendsContainer>
       </MainContainer>
     </CenteredContainer>
@@ -83,7 +92,7 @@ const FriendsContainer = styled.div`
     margin: 2rem 0;
   }
 `;
-const FriendsWrap = styled.div`
+const UsersWrap = styled.div`
   width: 100%;
   max-width: 400px;
   display: flex;
