@@ -4,8 +4,8 @@ import { useTheme } from "styled-components";
 import { CenteredContainer } from "../components/containers.js";
 import StyledInput from "../components/Inputs/StyledInput.js";
 import tempAvatar from "../assets/player/tempCover.jpeg";
-import { addToFriends, searchUsers, showFriends } from "../helpers/callApi.js";
-import { IoPersonAddOutline } from "react-icons/io";
+import { addToFriends, searchUsers, showFriends, url } from "../helpers/callApi.js";
+import { IoIosAirplane } from "react-icons/io";
 
 const tempFriends = [
   {
@@ -35,7 +35,8 @@ const Friends = () => {
   }, []);
 
   const handleSearch = async (e) => {
-    const res = searchUsers(e.target.value);
+    const res = await searchUsers(e.target.value);
+    console.log("handler:",res.data);
     setFetchedUsers(res.data);
   };
 
@@ -56,15 +57,15 @@ const Friends = () => {
             />
           </SearchWrap>
           <UsersWrap>
-            {fetchedUsers &&
+            {fetchedUsers.length>0 &&
               fetchedUsers.map((user) => (
                 <User>
-                  <img src={user.avatar} alt="user avatar" />
+                  <img src={url + user.avatar} alt="user avatar" />
                   <p>{user.username}</p>
                   <AddToFriendsBtn
                     onClick={() => handleAddFriend(user.username)}
                   >
-                    <IoPersonAddOutline />
+                    <IoIosAirplane />
                   </AddToFriendsBtn>
                 </User>
               ))}
@@ -73,7 +74,7 @@ const Friends = () => {
         <FriendsContainer>
           <h2>Your Friends</h2>
           <UsersWrap>
-            {friends &&
+            {friends.length>0 &&
               friends.map((friend) => (
                 <Friend key={friend.username}>
                   <img src={friend.avatar} alt="user avatar" />
