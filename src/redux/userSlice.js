@@ -4,6 +4,7 @@ import { callGetApi } from "../helpers/callApi.js";
 
 export const fetchUserData = createAsyncThunk("api/user", async (ThunkApi) => {
   const res = await callGetApi("api/test/user", { headers: getApiHeader() });
+  console.log("FETCH FRESH DATA");
   return res.data;
 });
 

@@ -37,8 +37,8 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route exact path="/settings" element={<Settings />} />
               <Route path="/room" element={<Room />} />
-            </Route>
             <Route path="/friends" element={<Friends />} />
+            </Route>
           </Routes>
         </SidebarOffset>
       </Router>

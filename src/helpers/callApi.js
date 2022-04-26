@@ -12,6 +12,16 @@ export const callPostApi = async (endpoint, data, config = {}) => {
   }
 };
 
+export const changeAvatar = async (endpoint, form, config = {}) => {
+  try {
+    const res = await axios.post(url + endpoint, form, config);
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+
 export const callGetApi = async (endpoint, config = {}) => {
   try {
     const res = await axios.get(url + endpoint, config);
@@ -62,7 +72,7 @@ export const addToFriends = async (username) => {
 
 export const showFriends = async () => {
   try {
-    const res = await callGetApi("api/showfriends", {
+    const res = await callGetApi("api/test/showfriends", {
       headers: getApiHeader(),
     });
     return res;

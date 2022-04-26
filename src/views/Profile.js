@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import RoundedButton from "../components/Inputs/RoundedButton.js";
 import { getApiHeader } from "../helpers/auth.js";
-import { callPostApi, url } from "../helpers/callApi.js";
-import { changeUsername } from "../redux/userSlice.js";
+import { callPostApi, changeAvatar, url } from "../helpers/callApi.js";
+import { changeUsername, fetchUserData } from "../redux/userSlice.js";
 
 const Profile = () => {
   const [chosenOption, setChosenOption] = useState(0);
@@ -21,12 +21,12 @@ const Profile = () => {
   const confirmAvatarUpload = async () => {
     const formData = new FormData();
     formData.append("avatar", avatarImg);
-    console.log(formData);
-    const res = await callPostApi("api/test/changeavatar", formData, {
+    const res = await changeAvatar("api/test/changeavatar", formData, {
       headers: getApiHeader(),
     });
     console.log(res);
-    if (res === 200) {
+    if (res.status === 200) {
+      dispatch(fetchUserData())
       console.log("avatar changed");
     }
   };
@@ -41,7 +41,7 @@ const Profile = () => {
       { headers: getApiHeader() }
     );
     if (res.status === 200) {
-      dispatch(changeUsername(nickname));
+      dispatch(fetchUserData());
     }
   };
   return (
@@ -120,7 +120,8 @@ const AvatarWrap = styled.div`
   }
 `;
 const AvatarImg = styled.img`
-  width: 100%;
+  width: 100px;
+  height: 100px;
   max-width: 195px;
 `;
 const OptionsWrap = styled.div`

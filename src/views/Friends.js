@@ -5,7 +5,7 @@ import { CenteredContainer } from "../components/containers.js";
 import StyledInput from "../components/Inputs/StyledInput.js";
 import tempAvatar from "../assets/player/tempCover.jpeg";
 import { addToFriends, searchUsers, showFriends, url } from "../helpers/callApi.js";
-import { IoIosAirplane } from "react-icons/io";
+import { AiOutlineUserAdd } from "react-icons/ai";
 
 const tempFriends = [
   {
@@ -26,12 +26,12 @@ const Friends = () => {
 
   const fetchFriends = async () => {
     const res = await showFriends();
-    return res.data;
+    console.log("fetch: ".res);
+    setFriends(res.data);
   };
 
   useEffect(() => {
-    const friends = fetchFriends();
-    setFriends(friends);
+    fetchFriends();
   }, []);
 
   const handleSearch = async (e) => {
@@ -42,6 +42,8 @@ const Friends = () => {
 
   const handleAddFriend = async (username) => {
     const res = await addToFriends(username);
+    fetchFriends()
+    setFetchedUsers(fetchedUsers.filter(user => user.username !== username))
     console.log("FRIENDS.js :", res);
   };
 
@@ -59,13 +61,13 @@ const Friends = () => {
           <UsersWrap>
             {fetchedUsers.length>0 &&
               fetchedUsers.map((user) => (
-                <User>
+                <User key={user}>
                   <img src={url + user.avatar} alt="user avatar" />
                   <p>{user.username}</p>
                   <AddToFriendsBtn
                     onClick={() => handleAddFriend(user.username)}
                   >
-                    <IoIosAirplane />
+                    <AiOutlineUserAdd />
                   </AddToFriendsBtn>
                 </User>
               ))}
@@ -74,13 +76,15 @@ const Friends = () => {
         <FriendsContainer>
           <h2>Your Friends</h2>
           <UsersWrap>
-            {friends.length>0 &&
-              friends.map((friend) => (
+            {friends.length>0 ?
+              (friends.map((friend) => (
                 <Friend key={friend.username}>
-                  <img src={friend.avatar} alt="user avatar" />
+                  <img src={url + friend.avatar} alt="user avatar" />
                   <p>{friend.username}</p>
                 </Friend>
-              ))}
+              ))) : (
+                <p>you have no friends 🤣</p>
+              )}
           </UsersWrap>
         </FriendsContainer>
       </MainContainer>
@@ -121,6 +125,7 @@ const UsersWrap = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  align-items:center;
 `;
 const Friend = styled.div`
   width: 100%;
@@ -132,17 +137,29 @@ const Friend = styled.div`
   border-radius: 0.25rem;
   img {
     width: 60px;
+    height: 60px;
     border-top-left-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
   }
 `;
 
 const AddToFriendsBtn = styled.button`
-  width: 30px;
-  height: 30px;
-  border-radius: 0.25rem;
+  width: 45px;
+  height: 45px;
+  border-radius: 0.1rem;
+  background: none;
+  margin-right:1rem;
+  border:none;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  padding:0.25rem;
+  border-radius:50%;
+  :hover{
+    background: ${({theme}) => theme.colors.backdrop}
+  }
   svg {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
   }
 `;
 const User = styled.div`
@@ -155,6 +172,7 @@ const User = styled.div`
   border-radius: 0.25rem;
   img {
     width: 60px;
+    height: 60px;
     border-top-left-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
   }
