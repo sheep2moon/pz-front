@@ -22,7 +22,10 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Avatar = styled.img``;
+const Avatar = styled.img`
+  width:60px;
+  height:60px;
+`;
 const Text = styled.p`
   margin-top: 0.25rem;
 `;
