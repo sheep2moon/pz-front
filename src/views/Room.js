@@ -38,7 +38,7 @@ const Room = ({ socket }) => {
   // useEffect(() => {
   //   if (room.name) {
   //     setIsLoading(false);
-  //   }
+  //   } vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   // }, [room]);
 
   useEffect(() => {

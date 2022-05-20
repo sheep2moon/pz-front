@@ -16,7 +16,7 @@ const Sidebar = ({ socket }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [joiningRoom, setJoiningRoom] = useState(false);
-  const [accessCode] = useSelector((state) => state.room);
+  const { accessCode } = useSelector((state) => state.room);
 
   const handleLogout = async () => {
     await leaveTheRoom(accessCode);
