@@ -53,7 +53,7 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchUserData.fulfilled, (state, action) => {
       const data = action.payload;
-      console.log("builder: ", action.payload);
+      console.log("builder: ", data);
       if (data) {
         state.id = data.id;
         state.username = data.username;

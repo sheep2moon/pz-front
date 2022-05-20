@@ -9,7 +9,8 @@ import io from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingSpinner from "../components/LoadingSpinner.js";
 import { updateRoomData } from "../redux/roomSlice.js";
-import { leaveTheRoom } from "../helpers/callApi.js";
+import { joinTheRoom, leaveTheRoom } from "../helpers/callApi.js";
+import { useParams } from "react-router";
 
 const temporaryPlaylist = [
   {
@@ -34,23 +35,24 @@ const Room = ({ socket }) => {
   const user = useSelector((state) => state.user);
   const theme = useTheme();
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if (room.name) {
-  //     setIsLoading(false);
-  //   } vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  // }, [room]);
+  const { id } = useParams();
 
   useEffect(() => {
+    const firstRenderJoin = async () => {
+      await joinTheRoom(id);
+      socket.emit("join-room", id);
+    };
+    firstRenderJoin();
+
     socket.on("updateroom", () => {
-      dispatch(updateRoomData(room.accessCode));
+      console.log("updateRoom");
+      dispatch(updateRoomData(id));
     });
-    socket.emit("join-room", room.accessCode);
 
     return async () => {
       console.log("leaving");
-      await leaveTheRoom(room.accessCode);
-      socket.emit("leave-room", room.accessCode);
+      await leaveTheRoom(id);
+      socket.emit("leave-room", id);
     };
   }, []);
 
@@ -66,7 +68,7 @@ const Room = ({ socket }) => {
 
   return (
     <>
-      <MembersSidebar members={room.members} />
+      <MembersSidebar />
       <CenteredContainer bg={theme.gradients.slava}>
         <MusicPlayer />
         <RoomContainer>
@@ -76,10 +78,10 @@ const Room = ({ socket }) => {
           </RoomNameWrap>
           <AccessCode
             onClick={() => {
-              navigator.clipboard.writeText(room.accessCode);
+              navigator.clipboard.writeText(id);
             }}
           >
-            <p>{room.accessCode}</p>
+            <p>{id}</p>
           </AccessCode>
           <RoomContent>
             <RoomPlaylist playlist={temporaryPlaylist} />

@@ -22,7 +22,7 @@ const JoinRoom = ({ setJoiningRoom }) => {
       dispatch(fetchUserData());
       dispatch(updateAccessCode(code));
       joinTheRoom(code);
-      navigate("/room");
+      navigate(`/room/${code}`);
     }
     setJoiningRoom(false);
   };

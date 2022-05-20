@@ -17,7 +17,7 @@ const Rooms = ({ setIsNewRoomModal, rooms }) => {
     joinTheRoom(code);
     dispatch(updateRoomData(code));
     dispatch(updateAccessCode(code));
-    navigate("/room");
+    navigate(`/room/${code}`);
   };
 
   return (

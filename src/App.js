@@ -17,10 +17,11 @@ import Friends from "./views/Friends.js";
 import Room from "./views/Room";
 import { io } from "socket.io-client";
 
+const socket = io("http://localhost:5050");
+
 function App() {
   const { username } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const socket = io("http://localhost:5050");
   useEffect(() => {
     if (isUserLoggedIn() && !username) dispatch(fetchUserData());
   }, [username, dispatch]);
@@ -37,7 +38,7 @@ function App() {
               <Route exact path="/" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route exact path="/settings" element={<Settings />} />
-              <Route path="/room" element={<Room socket={socket} />} />
+              <Route path="/room/:id" element={<Room socket={socket} />} />
               <Route path="/friends" element={<Friends />} />
             </Route>
           </Routes>

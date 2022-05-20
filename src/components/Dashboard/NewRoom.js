@@ -28,8 +28,7 @@ const NewRoom = ({ setIsNewRoomModal }) => {
       dispatch(fetchUserData());
       dispatch(updateRoomData(res.data.code));
       dispatch(updateAccessCode(res.data.code));
-      joinTheRoom(res.data.code);
-      navigate("/room");
+      navigate(`/room/${res.data.code}`);
     }
   };
 

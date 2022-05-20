@@ -3,8 +3,10 @@ import styled from "styled-components";
 import { FiUsers } from "react-icons/fi";
 import { RiUserAddLine } from "react-icons/ri";
 import { url } from "../../helpers/callApi.js";
+import { useSelector } from "react-redux";
 
-const MembersSidebar = ({ members }) => {
+const MembersSidebar = () => {
+  const { members } = useSelector((state) => state.room);
   return (
     <SidebarContainer>
       <SectionWrap>

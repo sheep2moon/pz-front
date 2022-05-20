@@ -21,7 +21,6 @@ export const changeAvatar = async (endpoint, form, config = {}) => {
   }
 };
 
-
 export const callGetApi = async (endpoint, config = {}) => {
   try {
     const res = await axios.get(url + endpoint, config);
@@ -38,6 +37,7 @@ export const joinTheRoom = async (code) => {
       { code },
       { headers: getApiHeader() }
     );
+    console.log("joinTheRoomFunction", res);
     return res;
   } catch (error) {
     return error.response;
