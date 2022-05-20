@@ -28,7 +28,7 @@ const temporaryPlaylist = [
   },
 ];
 
-const Room = () => {
+const Room = ({ socket }) => {
   const [isLoading, setIsLoading] = useState(true);
   const room = useSelector((state) => state.room);
   const user = useSelector((state) => state.user);
@@ -42,13 +42,11 @@ const Room = () => {
   // }, [room]);
 
   useEffect(() => {
-    const socket = io("http://localhost:5050");
-    socket.on("connect", () => {
-      socket.on("updateroom", () => {
-        dispatch(updateRoomData(room.accessCode));
-      });
-      socket.emit("join-room", room.accessCode);
+    socket.on("updateroom", () => {
+      dispatch(updateRoomData(room.accessCode));
     });
+    socket.emit("join-room", room.accessCode);
+
     return async () => {
       console.log("leaving");
       await leaveTheRoom(room.accessCode);

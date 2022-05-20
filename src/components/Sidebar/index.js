@@ -9,13 +9,18 @@ import ProfileInfo from "./ProfileInfo";
 import { AiOutlinePlus } from "react-icons/ai";
 import HamburgerIcon from "./HamburgerIcon.js";
 import JoinRoom from "../Dashboard/JoinRoom.js";
+import { useSelector } from "react-redux";
+import { leaveTheRoom } from "../../helpers/callApi.js";
 
-const Sidebar = () => {
+const Sidebar = ({ socket }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [joiningRoom, setJoiningRoom] = useState(false);
+  const [accessCode] = useSelector((state) => state.room);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await leaveTheRoom(accessCode);
+    socket.emit("leave-room", accessCode);
     localStorage.removeItem("user");
     navigate("/login");
   };
