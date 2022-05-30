@@ -8,8 +8,8 @@ import { ErrorMessageWrapper } from "../components/errorComponents.js";
 import RoundedButton from "../components/Inputs/RoundedButton";
 import StyledInput from "../components/Inputs/StyledInput";
 import UnderlinedLinkButton from "../components/Inputs/UnderlinedLinkButton";
-import { callPostApi } from "../helpers/callApi.js";
-import { validateEmail } from "../helpers/validateEmail.js";
+import { callPostApi } from "../service/callApi.js";
+import { validateEmail } from "../service/validateEmail.js";
 
 const Register = () => {
   const theme = useTheme();

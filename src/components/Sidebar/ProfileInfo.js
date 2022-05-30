@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { url } from "../../helpers/callApi.js";
+import { url } from "../../service/callApi.js";
 
 const ProfileInfo = () => {
   const { username, picture } = useSelector((state) => state.user);
@@ -23,8 +23,8 @@ const Wrapper = styled.div`
 `;
 
 const Avatar = styled.img`
-  width:60px;
-  height:60px;
+  width: 60px;
+  height: 60px;
 `;
 const Text = styled.p`
   margin-top: 0.25rem;

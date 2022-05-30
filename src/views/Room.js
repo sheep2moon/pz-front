@@ -5,12 +5,12 @@ import MembersSidebar from "../components/MembersSidebar";
 import { HiOutlineLockClosed, HiOutlineLockOpen } from "react-icons/hi";
 import MusicPlayer from "../components/MusicPlayer";
 import RoomPlaylist from "../components/Room/RoomPlaylist";
-import io from "socket.io-client";
+
 import { useDispatch, useSelector } from "react-redux";
-import LoadingSpinner from "../components/LoadingSpinner.js";
 import { updateRoomData } from "../redux/roomSlice.js";
-import { joinTheRoom, leaveTheRoom } from "../helpers/callApi.js";
+import { joinTheRoom, leaveTheRoom } from "../service/callApi.js";
 import { useParams } from "react-router";
+import { socket } from "../service/socket.js";
 
 const temporaryPlaylist = [
   {
@@ -29,21 +29,19 @@ const temporaryPlaylist = [
   },
 ];
 
-const Room = ({ socket }) => {
-  const [isLoading, setIsLoading] = useState(true);
+const Room = () => {
   const room = useSelector((state) => state.room);
-  const user = useSelector((state) => state.user);
   const theme = useTheme();
   const dispatch = useDispatch();
   const { id } = useParams();
+  const { socketId } = useSelector((store) => store.user);
 
   useEffect(() => {
     const firstRenderJoin = async () => {
-      await joinTheRoom(id);
+      await joinTheRoom(id, socketId);
       socket.emit("join-room", id);
     };
     firstRenderJoin();
-
     socket.on("updateroom", () => {
       console.log("updateRoom");
       dispatch(updateRoomData(id));
@@ -55,16 +53,6 @@ const Room = ({ socket }) => {
       socket.emit("leave-room", id);
     };
   }, []);
-
-  // if (isLoading) {
-  //   return (
-  //     <>
-  //       <CenteredContainer bg={theme.gradients.slava}>
-  //         <LoadingSpinner />
-  //       </CenteredContainer>
-  //     </>
-  //   );
-  // }
 
   return (
     <>

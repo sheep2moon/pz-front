@@ -3,48 +3,52 @@ import styled from "styled-components";
 import { useTheme } from "styled-components";
 import { CenteredContainer } from "../components/containers.js";
 import StyledInput from "../components/Inputs/StyledInput.js";
-import tempAvatar from "../assets/player/tempCover.jpeg";
-import { addToFriends, searchUsers, showFriends, url } from "../helpers/callApi.js";
+import {
+  addToFriends,
+  searchUsers,
+  showFriends,
+  url,
+} from "../service/callApi.js";
 import { AiOutlineUserAdd } from "react-icons/ai";
-
-const tempFriends = [
-  {
-    username: "Friend1",
-    avatar: tempAvatar,
-  },
-  {
-    username: "Friend2",
-    avatar: tempAvatar,
-  },
-];
+import { useDispatch } from "react-redux";
+import { setLoading } from "../redux/loadingSlice.js";
 
 const Friends = () => {
   const theme = useTheme();
   const searchRef = useRef();
   const [fetchedUsers, setFetchedUsers] = useState([]);
   const [friends, setFriends] = useState([]);
+  const dispatch = useDispatch();
 
   const fetchFriends = async () => {
+    dispatch(setLoading(true));
     const res = await showFriends();
-    console.log("fetch: ".res);
-    setFriends(res.data);
+    if (res.status === 200) {
+      console.log("setting friends");
+      setFriends(res.data);
+    } else {
+      console.log("fetch friends error status: ", res.status);
+    }
+    dispatch(setLoading(false));
   };
 
   useEffect(() => {
     fetchFriends();
-  }, []);
+  }, [friends]);
 
   const handleSearch = async (e) => {
     const res = await searchUsers(e.target.value);
-    console.log("handler:",res.data);
-    setFetchedUsers(res.data);
+    if (res.status === 200) {
+      setFetchedUsers(res.data);
+    } else {
+      console.log("search users status error", res.status);
+    }
   };
 
   const handleAddFriend = async (username) => {
     const res = await addToFriends(username);
-    fetchFriends()
-    setFetchedUsers(fetchedUsers.filter(user => user.username !== username))
-    console.log("FRIENDS.js :", res);
+    fetchFriends();
+    setFetchedUsers(fetchedUsers.filter((user) => user.username !== username));
   };
 
   return (
@@ -59,7 +63,7 @@ const Friends = () => {
             />
           </SearchWrap>
           <UsersWrap>
-            {fetchedUsers.length>0 &&
+            {fetchedUsers.length > 0 &&
               fetchedUsers.map((user) => (
                 <User key={user}>
                   <img src={url + user.avatar} alt="user avatar" />
@@ -76,15 +80,16 @@ const Friends = () => {
         <FriendsContainer>
           <h2>Your Friends</h2>
           <UsersWrap>
-            {friends.length>0 ?
-              (friends.map((friend) => (
+            {friends.length > 0 ? (
+              friends.map((friend) => (
                 <Friend key={friend.username}>
                   <img src={url + friend.avatar} alt="user avatar" />
                   <p>{friend.username}</p>
                 </Friend>
-              ))) : (
-                <p>you have no friends 🤣</p>
-              )}
+              ))
+            ) : (
+              <p>you have no friends</p>
+            )}
           </UsersWrap>
         </FriendsContainer>
       </MainContainer>
@@ -125,7 +130,7 @@ const UsersWrap = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  align-items:center;
+  align-items: center;
 `;
 const Friend = styled.div`
   width: 100%;
@@ -148,15 +153,15 @@ const AddToFriendsBtn = styled.button`
   height: 45px;
   border-radius: 0.1rem;
   background: none;
-  margin-right:1rem;
-  border:none;
-  cursor:pointer;
-  display:grid;
-  place-items:center;
-  padding:0.25rem;
-  border-radius:50%;
-  :hover{
-    background: ${({theme}) => theme.colors.backdrop}
+  margin-right: 1rem;
+  border: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0.25rem;
+  border-radius: 50%;
+  :hover {
+    background: ${({ theme }) => theme.colors.backdrop};
   }
   svg {
     font-size: 1.8rem;

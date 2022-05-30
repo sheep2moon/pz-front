@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router";
-import { isUserLoggedIn } from "../helpers/auth";
+import { isUserLoggedIn } from "../service/auth";
 
 const RequireAuth = () => {
   if (!isUserLoggedIn()) {

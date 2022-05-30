@@ -9,18 +9,17 @@ import Dashboard from "./views/Dashboard.js";
 import styled from "styled-components";
 import Settings from "./views/Settings.js";
 import { useEffect } from "react";
-import { isUserLoggedIn } from "./helpers/auth.js";
+import { isUserLoggedIn } from "./service/auth.js";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserData } from "./redux/userSlice.js";
 import RequireAuth from "./router/RequireAuth";
 import Friends from "./views/Friends.js";
 import Room from "./views/Room";
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:5050");
+import LoadingSpinner from "./components/LoadingSpinner.js";
 
 function App() {
   const { username } = useSelector((state) => state.user);
+  const { loading, connection } = useSelector((store) => store.loading);
   const dispatch = useDispatch();
   useEffect(() => {
     if (isUserLoggedIn() && !username) dispatch(fetchUserData());
@@ -29,7 +28,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Sidebar socket={socket} />
+        <Sidebar />
+        {(loading || connection) && <LoadingSpinner />}
         <SidebarOffset>
           <Routes>
             <Route exact path="/login" element={<Login />} />
@@ -38,7 +38,7 @@ function App() {
               <Route exact path="/" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route exact path="/settings" element={<Settings />} />
-              <Route path="/room/:id" element={<Room socket={socket} />} />
+              <Route path="/room/:id" element={<Room />} />
               <Route path="/friends" element={<Friends />} />
             </Route>
           </Routes>

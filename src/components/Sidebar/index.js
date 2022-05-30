@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { links } from "./links-config";
 import SidebarLink from "./SidebarLink";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
 import { useNavigate } from "react-router";
-import { isUserLoggedIn } from "../../helpers/auth";
+import { isUserLoggedIn } from "../../service/auth";
 import ProfileInfo from "./ProfileInfo";
 import { AiOutlinePlus } from "react-icons/ai";
 import HamburgerIcon from "./HamburgerIcon.js";
 import JoinRoom from "../Dashboard/JoinRoom.js";
-import { useSelector } from "react-redux";
-import { leaveTheRoom } from "../../helpers/callApi.js";
+import { useDispatch, useSelector } from "react-redux";
+import { leaveTheRoom } from "../../service/callApi.js";
+import { socket } from "../../service/socket.js";
+import { setConnection } from "../../redux/loadingSlice.js";
+import { setSocketId } from "../../redux/userSlice.js";
 
-const Sidebar = ({ socket }) => {
+const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [joiningRoom, setJoiningRoom] = useState(false);
   const { accessCode } = useSelector((state) => state.room);
+  const dispatch = useDispatch();
 
   const handleLogout = async () => {
     await leaveTheRoom(accessCode);
@@ -24,6 +28,17 @@ const Sidebar = ({ socket }) => {
     localStorage.removeItem("user");
     navigate("/login");
   };
+
+  useEffect(() => {
+    if (socket.connected) {
+      dispatch(setConnection(true));
+      dispatch(setSocketId(socket.id));
+    } else {
+      dispatch(setSocketId(""));
+      dispatch(setConnection(false));
+    }
+    console.log(socket);
+  }, []);
 
   return (
     <>

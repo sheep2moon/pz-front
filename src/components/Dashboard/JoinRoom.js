@@ -1,11 +1,10 @@
 import React, { useRef } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { getApiHeader } from "../../helpers/auth.js";
-import { callPostApi, joinTheRoom } from "../../helpers/callApi.js";
+import { joinTheRoom } from "../../service/callApi.js";
 import RoundedButton from "../Inputs/RoundedButton.js";
 import StyledInput from "../Inputs/StyledInput.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateAccessCode, updateRoomData } from "../../redux/roomSlice.js";
 import { fetchUserData } from "../../redux/userSlice.js";
 
@@ -13,15 +12,15 @@ const JoinRoom = ({ setJoiningRoom }) => {
   const accesCodeRef = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { socketId } = useSelector((store) => store.user);
 
   const handleJoinRoom = async () => {
     const code = accesCodeRef.current.value;
-    const res = await joinTheRoom(code);
+    const res = await joinTheRoom(code, socketId);
     if (res.status === 200) {
       dispatch(updateRoomData(code));
       dispatch(fetchUserData());
       dispatch(updateAccessCode(code));
-      joinTheRoom(code);
       navigate(`/room/${code}`);
     }
     setJoiningRoom(false);

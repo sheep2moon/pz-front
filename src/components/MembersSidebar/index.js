@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { FiUsers } from "react-icons/fi";
 import { RiUserAddLine } from "react-icons/ri";
-import { url } from "../../helpers/callApi.js";
+import { url } from "../../service/callApi.js";
 import { useSelector } from "react-redux";
 
 const MembersSidebar = () => {

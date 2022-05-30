@@ -1,8 +1,8 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { joinTheRoom } from "../../helpers/callApi.js";
+import { joinTheRoom } from "../../service/callApi.js";
 import { updateRoomData } from "../../redux/roomSlice.js";
 import { updateAccessCode } from "../../redux/roomSlice.js";
 import CreateButton from "./CreateButton.js";
@@ -12,9 +12,9 @@ const Rooms = ({ setIsNewRoomModal, rooms }) => {
   const navigate = useNavigate();
   console.log(rooms);
   const dispatch = useDispatch();
+  const { socketId } = useSelector((store) => store.user);
 
   const navigateToRoom = (code) => {
-    joinTheRoom(code);
     dispatch(updateRoomData(code));
     dispatch(updateAccessCode(code));
     navigate(`/room/${code}`);

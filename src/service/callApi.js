@@ -30,11 +30,11 @@ export const callGetApi = async (endpoint, config = {}) => {
   }
 };
 
-export const joinTheRoom = async (code) => {
+export const joinTheRoom = async (code, socketId) => {
   try {
     const res = await callPostApi(
       "api/test/joinroom",
-      { code },
+      { code, socketid: socketId },
       { headers: getApiHeader() }
     );
     console.log("joinTheRoomFunction", res);

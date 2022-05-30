@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import RoundedButton from "../components/Inputs/RoundedButton.js";
-import { getApiHeader } from "../helpers/auth.js";
-import { callPostApi, changeAvatar, url } from "../helpers/callApi.js";
+import { getApiHeader } from "../service/auth.js";
+import { callPostApi, changeAvatar, url } from "../service/callApi.js";
 import { changeUsername, fetchUserData } from "../redux/userSlice.js";
 
 const Profile = () => {
@@ -26,7 +26,7 @@ const Profile = () => {
     });
     console.log(res);
     if (res.status === 200) {
-      dispatch(fetchUserData())
+      dispatch(fetchUserData());
       console.log("avatar changed");
     }
   };

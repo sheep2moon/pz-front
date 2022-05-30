@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getApiHeader } from "../helpers/auth.js";
-import { callGetApi, callUpdateRoom } from "../helpers/callApi.js";
+import { getApiHeader } from "../service/auth.js";
+import { callGetApi, callUpdateRoom } from "../service/callApi.js";
 
 export const updateRoomData = createAsyncThunk(
   "api/room",
