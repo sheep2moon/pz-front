@@ -55,11 +55,13 @@ const SectionWrap = styled.div`
 const MembersWrap = styled.div`
   display: flex;
   flex-direction: column;
+  transition: all 0.2s ease-in-out;
 `;
 const Member = styled.div`
   display: flex;
   align-items: center;
   padding: 0.5rem;
+  transition: all 0.2s ease-in-out;
   img {
     width: 30px;
     height: 30px;
@@ -73,6 +75,7 @@ const TitleBar = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.primary};
   padding: 0.5rem;
+  transition: all 0.2s ease-in-out;
   svg {
     font-size: 1.4rem;
     margin-right: 1rem;

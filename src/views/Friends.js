@@ -34,7 +34,8 @@ const Friends = () => {
 
   useEffect(() => {
     fetchFriends();
-  }, [friends]);
+    handleSearch({ target: { value: "" } });
+  }, []);
 
   const handleSearch = async (e) => {
     const res = await searchUsers(e.target.value);
