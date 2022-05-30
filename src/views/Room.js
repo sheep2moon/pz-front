@@ -34,11 +34,10 @@ const Room = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { socketId } = useSelector((store) => store.user);
 
   useEffect(() => {
     const firstRenderJoin = async () => {
-      await joinTheRoom(id, socketId);
+      await joinTheRoom(id, socket.id);
       socket.emit("join-room", id);
     };
     firstRenderJoin();

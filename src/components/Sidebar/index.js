@@ -33,12 +33,13 @@ const Sidebar = () => {
     if (socket.connected) {
       dispatch(setConnection(true));
       dispatch(setSocketId(socket.id));
+      console.log(socket.id);
     } else {
       dispatch(setSocketId(""));
       dispatch(setConnection(false));
     }
     console.log(socket);
-  }, []);
+  }, [socket]);
 
   return (
     <>

@@ -4,19 +4,19 @@ import styled from "styled-components";
 import { joinTheRoom } from "../../service/callApi.js";
 import RoundedButton from "../Inputs/RoundedButton.js";
 import StyledInput from "../Inputs/StyledInput.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateAccessCode, updateRoomData } from "../../redux/roomSlice.js";
 import { fetchUserData } from "../../redux/userSlice.js";
+import { socket } from "../../service/socket.js";
 
 const JoinRoom = ({ setJoiningRoom }) => {
   const accesCodeRef = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { socketId } = useSelector((store) => store.user);
 
   const handleJoinRoom = async () => {
     const code = accesCodeRef.current.value;
-    const res = await joinTheRoom(code, socketId);
+    const res = await joinTheRoom(code, socket.id);
     if (res.status === 200) {
       dispatch(updateRoomData(code));
       dispatch(fetchUserData());
