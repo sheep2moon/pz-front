@@ -11,6 +11,7 @@ import StyledInput from "../components/Inputs/StyledInput";
 import UnderlinedLinkButton from "../components/Inputs/UnderlinedLinkButton";
 import { callPostApi } from "../service/callApi.js";
 import { fetchUserData } from "../redux/userSlice.js";
+import { registerSocket } from "../service/socket.js";
 
 const Login = () => {
   const theme = useTheme();
@@ -49,6 +50,7 @@ const Login = () => {
       if (res.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(res.data));
         dispatch(fetchUserData());
+        registerSocket();
         navigate("/");
       }
     } else {
