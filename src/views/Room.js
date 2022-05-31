@@ -8,9 +8,10 @@ import RoomPlaylist from "../components/Room/RoomPlaylist";
 
 import { useDispatch, useSelector } from "react-redux";
 import { updateRoomData } from "../redux/roomSlice.js";
-import { joinTheRoom, leaveTheRoom } from "../service/callApi.js";
+import { joinTheRoom, leaveTheRoom, showFriends } from "../service/callApi.js";
 import { useParams } from "react-router";
 import { socket } from "../service/socket.js";
+import { setLoading } from "../redux/loadingSlice.js";
 
 const temporaryPlaylist = [
   {
@@ -31,6 +32,7 @@ const temporaryPlaylist = [
 
 const Room = () => {
   const room = useSelector((state) => state.room);
+
   const theme = useTheme();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -55,7 +57,7 @@ const Room = () => {
 
   return (
     <>
-      <MembersSidebar />
+      <MembersSidebar roomName={room.name} roomCode={id} />
       <CenteredContainer bg={theme.gradients.slava}>
         <MusicPlayer />
         <RoomContainer>

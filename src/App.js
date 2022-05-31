@@ -29,7 +29,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Sidebar />
-        {(loading || connection) && <LoadingSpinner />}
+        {(loading || !connection) && <LoadingSpinner />}
         <SidebarOffset>
           <Routes>
             <Route exact path="/login" element={<Login />} />

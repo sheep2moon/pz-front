@@ -93,6 +93,20 @@ export const leaveTheRoom = async (code) => {
     return error.response;
   }
 };
+export const inviteFriend = async (friendname, roomname, code) => {
+  console.log("inviter");
+  try {
+    const res = await callPostApi(
+      "api/test/invitetoroom",
+      { code, roomname, friendname },
+      { headers: getApiHeader() }
+    );
+    console.log(res);
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 export const callUpdateRoom = async (code) => {
   try {

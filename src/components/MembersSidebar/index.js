@@ -1,12 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FiUsers } from "react-icons/fi";
 import { RiUserAddLine } from "react-icons/ri";
-import { url } from "../../service/callApi.js";
-import { useSelector } from "react-redux";
+import { HiOutlineUserAdd } from "react-icons/hi";
+import { inviteFriend, showFriends, url } from "../../service/callApi.js";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../../redux/loadingSlice.js";
 
-const MembersSidebar = () => {
+const MembersSidebar = ({ roomName, roomCode }) => {
   const { members } = useSelector((state) => state.room);
+  const [friends, setFriends] = useState([]);
+  const dispatch = useDispatch();
+
+  const fetchFriends = async () => {
+    dispatch(setLoading(true));
+    const res = await showFriends();
+    if (res.status === 200) {
+      const filteredFriendsList = res.data.filter((friend) => {
+        if (members.some((m) => m.username === friend.username)) return false;
+        else return true;
+      });
+      console.log(filteredFriendsList);
+      setFriends(filteredFriendsList);
+    } else {
+      console.log("fetch friends error status: ", res.status);
+    }
+    dispatch(setLoading(false));
+  };
+
+  const handleInvite = async (friendName) => {
+    const res = await inviteFriend(friendName, roomName, roomCode);
+    if (res.status === 200) {
+      console.log("sucessfully invited", res);
+    } else {
+      console.log("invite error");
+    }
+  };
+
+  useEffect(() => {
+    fetchFriends();
+  }, [members]);
+
   return (
     <SidebarContainer>
       <SectionWrap>
@@ -18,8 +52,10 @@ const MembersSidebar = () => {
           {members &&
             members.map((member, index) => (
               <Member key={member.username}>
-                <img src={url + member.avatar} alt="awatar uzytkownika" />
-                <p>{member.username}</p>
+                <div>
+                  <img src={url + member.avatar} alt="awatar uzytkownika" />
+                  <p>{member.username}</p>
+                </div>
               </Member>
             ))}
         </MembersWrap>
@@ -29,6 +65,20 @@ const MembersSidebar = () => {
           <RiUserAddLine />
           <p>add your friends</p>
         </TitleBar>
+        <MembersWrap>
+          {friends.length > 0 &&
+            friends.map((friend, index) => (
+              <Member key={friend.username}>
+                <div>
+                  <img src={url + friend.avatar} alt="awatar uzytkownika" />
+                  <p>{friend.username}</p>
+                </div>
+                <InviteButton onClick={() => handleInvite(friend.username)}>
+                  <HiOutlineUserAdd />
+                </InviteButton>
+              </Member>
+            ))}
+        </MembersWrap>
       </SectionWrap>
     </SidebarContainer>
   );
@@ -60,6 +110,7 @@ const MembersWrap = styled.div`
 const Member = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0.5rem;
   transition: all 0.2s ease-in-out;
   img {
@@ -67,6 +118,23 @@ const Member = styled.div`
     height: 30px;
     border-radius: 50%;
     margin: 0 0.5rem;
+  }
+  > div {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const InviteButton = styled.button`
+  background: transparent;
+  border: none;
+  :hover {
+    color: ${({ theme }) => theme.colors.darkBlue};
+    cursor: pointer;
+  }
+  > svg {
+    font-size: 1.4rem;
+    margin-right: 1rem;
   }
 `;
 

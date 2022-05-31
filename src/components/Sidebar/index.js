@@ -30,16 +30,10 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
-    if (socket.connected) {
-      dispatch(setConnection(true));
-      dispatch(setSocketId(socket.id));
-      console.log(socket.id);
-    } else {
-      dispatch(setSocketId(""));
-      dispatch(setConnection(false));
-    }
-    console.log(socket);
-  }, [socket]);
+    socket.on("invite-ready", (data) => {
+      console.log("INVITATION", data);
+    });
+  }, []);
 
   return (
     <>
