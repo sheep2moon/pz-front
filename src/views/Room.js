@@ -50,7 +50,7 @@ const Room = () => {
 
     return async () => {
       console.log("leaving");
-      // await leaveTheRoom(id);
+      await leaveTheRoom(id);
       socket.emit("leave-room", id);
     };
   }, []);
