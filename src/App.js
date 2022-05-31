@@ -16,10 +16,11 @@ import RequireAuth from "./router/RequireAuth";
 import Friends from "./views/Friends.js";
 import Room from "./views/Room";
 import LoadingSpinner from "./components/LoadingSpinner.js";
+import InvitePopup from "./components/InvitePopup.js";
 
 function App() {
   const { username } = useSelector((state) => state.user);
-  const { loading, connection } = useSelector((store) => store.loading);
+  const { loading, connection, invite } = useSelector((store) => store.service);
   const dispatch = useDispatch();
   useEffect(() => {
     if (isUserLoggedIn() && !username) dispatch(fetchUserData());
@@ -29,6 +30,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Sidebar />
+        {Object.keys(invite).length !== 0 && <InvitePopup />}
         {(loading || !connection) && <LoadingSpinner />}
         <SidebarOffset>
           <Routes>

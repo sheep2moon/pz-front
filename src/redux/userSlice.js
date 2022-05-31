@@ -18,7 +18,6 @@ export const userSlice = createSlice({
     playlists: [],
     rooms: [],
     friends: [],
-    socketId: "",
   },
   reducers: {
     addPlaylist: (state, action) => {
@@ -26,9 +25,6 @@ export const userSlice = createSlice({
     },
     addRoom: (state, action) => {
       state.rooms.push(action.payload);
-    },
-    setSocketId: (state, action) => {
-      state.socketId = action.payload;
     },
     removePlaylist: (state, action) => {
       state.playlists = state.playlists.filter(
@@ -73,6 +69,5 @@ export const {
   changeUsername,
   changePicture,
   updateFriends,
-  setSocketId,
 } = userSlice.actions;
 export default userSlice.reducer;

@@ -5,7 +5,7 @@ import { RiUserAddLine } from "react-icons/ri";
 import { HiOutlineUserAdd } from "react-icons/hi";
 import { inviteFriend, showFriends, url } from "../../service/callApi.js";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../../redux/loadingSlice.js";
+import { setLoading } from "../../redux/serviceSlice.js";
 
 const MembersSidebar = ({ roomName, roomCode }) => {
   const { members } = useSelector((state) => state.room);
@@ -15,7 +15,8 @@ const MembersSidebar = ({ roomName, roomCode }) => {
   const fetchFriends = async () => {
     dispatch(setLoading(true));
     const res = await showFriends();
-    if (res.status === 200) {
+    console.log("fetch friends", res.data);
+    if (res.status === 200 && res.data instanceof Array) {
       const filteredFriendsList = res.data.filter((friend) => {
         if (members.some((m) => m.username === friend.username)) return false;
         else return true;

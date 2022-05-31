@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const loadingSlice = createSlice({
+export const serviceSlice = createSlice({
   name: "loading",
   initialState: {
     loading: false,
     connection: false,
+    invite: {},
   },
   reducers: {
     setLoading: (state, action) => {
@@ -13,9 +14,12 @@ export const loadingSlice = createSlice({
     setConnection: (state, action) => {
       state.connection = action.payload;
     },
+    setInvite: (state, action) => {
+      state.invite = action.payload;
+    },
   },
 });
 
-export const { setLoading, setConnection } = loadingSlice.actions;
+export const { setLoading, setConnection, setInvite } = serviceSlice.actions;
 
-export default loadingSlice.reducer;
+export default serviceSlice.reducer;

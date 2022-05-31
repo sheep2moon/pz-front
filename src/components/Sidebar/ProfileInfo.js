@@ -25,6 +25,7 @@ const Wrapper = styled.div`
 const Avatar = styled.img`
   width: 60px;
   height: 60px;
+  object-fit: cover;
 `;
 const Text = styled.p`
   margin-top: 0.25rem;

@@ -11,7 +11,7 @@ import { updateRoomData } from "../redux/roomSlice.js";
 import { joinTheRoom, leaveTheRoom, showFriends } from "../service/callApi.js";
 import { useParams } from "react-router";
 import { socket } from "../service/socket.js";
-import { setLoading } from "../redux/loadingSlice.js";
+import { setLoading } from "../redux/serviceSlice.js";
 
 const temporaryPlaylist = [
   {
@@ -50,7 +50,7 @@ const Room = () => {
 
     return async () => {
       console.log("leaving");
-      await leaveTheRoom(id);
+      // await leaveTheRoom(id);
       socket.emit("leave-room", id);
     };
   }, []);

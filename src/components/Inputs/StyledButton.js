@@ -1,0 +1,25 @@
+import React from "react";
+import styled from "styled-components";
+
+const StyledButton = ({
+  children,
+  bgColor = "#C8DFEC",
+  textColor = "f3f3f3",
+  ...rest
+}) => {
+  return (
+    <SButton bgColor={bgColor} textColor={textColor} {...rest}>
+      {children}
+    </SButton>
+  );
+};
+
+export default StyledButton;
+
+const SButton = styled.button`
+  border-radius: 8px;
+  padding: 0.25rem 0.5rem;
+  font-size: 1.4rem;
+  background-color: ${({ bgColor }) => bgColor};
+  color: ${({ textColor }) => textColor};
+`;

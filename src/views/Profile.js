@@ -123,6 +123,8 @@ const AvatarImg = styled.img`
   width: 100px;
   height: 100px;
   max-width: 195px;
+  object-fit: cover;
+  border-radius: 4px;
 `;
 const OptionsWrap = styled.div`
   display: flex;

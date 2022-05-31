@@ -1,21 +1,35 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import StyledInput from "../Inputs/StyledInput.js";
 import RoundedButton from "../Inputs/RoundedButton.js";
+import { callPostApi } from "../../service/callApi.js";
+import { getApiHeader } from "../../service/auth.js";
 
 const NewPlaylist = ({ setIsNewPlaylistModal }) => {
+  const nameRef = useRef();
+
+  const handleCreatePlaylist = async () => {
+    const res = await callPostApi(
+      "api/test/createplaylist",
+      { name: nameRef.current.value },
+      { headers: getApiHeader() }
+    );
+    if (res.status === 200) {
+      console.log(res.data.message);
+    }
+  };
+
   return (
     <Backdrop onClick={() => setIsNewPlaylistModal(false)}>
       <ModalWrap onClick={(e) => e.stopPropagation()}>
         <NewRoomIcon>
           <AiOutlineAppstoreAdd />
         </NewRoomIcon>
-        <StyledInput label="Playlist name" />
-        {/* TODO: SAVE OPTION  */}
+        <StyledInput label="Playlist name" ref={nameRef} />
         <ConfirmWrap>
           <p>Continue</p>
-          <RoundedButton />
+          <RoundedButton onClick={handleCreatePlaylist} />
         </ConfirmWrap>
       </ModalWrap>
     </Backdrop>

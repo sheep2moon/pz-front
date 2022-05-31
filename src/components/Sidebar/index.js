@@ -11,9 +11,8 @@ import HamburgerIcon from "./HamburgerIcon.js";
 import JoinRoom from "../Dashboard/JoinRoom.js";
 import { useDispatch, useSelector } from "react-redux";
 import { leaveTheRoom } from "../../service/callApi.js";
-import { socket } from "../../service/socket.js";
-import { setConnection } from "../../redux/loadingSlice.js";
-import { setSocketId } from "../../redux/userSlice.js";
+import { registerSocket, socket } from "../../service/socket.js";
+import { setInvite } from "../../redux/serviceSlice.js";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +31,9 @@ const Sidebar = () => {
   useEffect(() => {
     socket.on("invite-ready", (data) => {
       console.log("INVITATION", data);
+      dispatch(setInvite(data));
     });
+    if (socket.id) registerSocket();
   }, []);
 
   return (

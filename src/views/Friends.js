@@ -11,7 +11,7 @@ import {
 } from "../service/callApi.js";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { setLoading } from "../redux/loadingSlice.js";
+import { setLoading } from "../redux/serviceSlice.js";
 
 const Friends = () => {
   const theme = useTheme();
@@ -66,7 +66,7 @@ const Friends = () => {
           <UsersWrap>
             {fetchedUsers.length > 0 &&
               fetchedUsers.map((user) => (
-                <User key={user}>
+                <User key={user.username}>
                   <img src={url + user.avatar} alt="user avatar" />
                   <p>{user.username}</p>
                   <AddToFriendsBtn

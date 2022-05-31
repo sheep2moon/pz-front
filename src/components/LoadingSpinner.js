@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
-import { setConnection } from "../redux/loadingSlice.js";
-import { socket } from "../service/socket.js";
+import { setConnection, setLoading } from "../redux/serviceSlice.js";
+import { registerSocket, socket } from "../service/socket.js";
 
 const rotate360 = keyframes`
   from {
@@ -14,14 +14,14 @@ const rotate360 = keyframes`
 `;
 
 const LoadingSpinner = () => {
-  const { connection } = useSelector((store) => store.loading);
+  const { connection } = useSelector((store) => store.service);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const connectionChecker = setInterval(() => {
-      console.log(socket);
       if (socket.connected) {
         dispatch(setConnection(true));
+        if (socket.id) registerSocket();
         clearInterval(connectionChecker);
       }
     }, 1000);
