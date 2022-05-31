@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import StyledInput from "../Inputs/StyledInput.js";
 import RoundedButton from "../Inputs/RoundedButton.js";
-import { callPostApi } from "../../service/callApi.js";
+import { callPostApi, joinTheRoom } from "../../service/callApi.js";
 import { getApiHeader } from "../../service/auth.js";
 import { useDispatch } from "react-redux";
 import { fetchUserData } from "../../redux/userSlice.js";
@@ -26,6 +26,7 @@ const NewRoom = ({ setIsNewRoomModal }) => {
       console.log("new-room res: ", res.data);
       setIsNewRoomModal(false);
       dispatch(fetchUserData());
+      await joinTheRoom(res.data.code);
       dispatch(updateRoomData(res.data.code));
       dispatch(updateAccessCode(res.data.code));
       navigate(`/room/${res.data.code}`);

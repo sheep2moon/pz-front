@@ -22,4 +22,11 @@ const SButton = styled.button`
   font-size: 1.4rem;
   background-color: ${({ bgColor }) => bgColor};
   color: ${({ textColor }) => textColor};
+  border: none;
+  transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  :hover {
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: ${({ theme }) => theme.shadows.deep};
+  }
 `;

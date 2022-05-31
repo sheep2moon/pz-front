@@ -5,7 +5,6 @@ import { callPostApi } from "./callApi.js";
 export const socket = io("http://localhost:5050");
 
 export const registerSocket = async () => {
-  console.log(socket.id);
   const res = await callPostApi(
     "api/test/socket",
     { socketid: socket.id },

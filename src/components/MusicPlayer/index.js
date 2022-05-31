@@ -45,7 +45,7 @@ const MusicPlayer = () => {
           onProgress={handleProgress}
           onDuration={setDuration}
           onEnded={() => setIsPlaying(false)}
-          url="https://soundcloud.com/kelmani-kimble-226706142/transparent-soul"
+          url="https://soundcloud.com/attlas/concussion"
         />
       </HiddenPlayer>
       <PlayerContainer>

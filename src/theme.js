@@ -23,4 +23,7 @@ export const theme = {
     slava:
       "linear-gradient(180deg, #B5CCD9 33.96%, rgba(246, 221, 154, 0.4) 133.26%);",
   },
+  shadows: {
+    deep: "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
+  },
 };

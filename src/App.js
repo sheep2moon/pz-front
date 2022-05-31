@@ -26,11 +26,15 @@ function App() {
     if (isUserLoggedIn() && !username) dispatch(fetchUserData());
   }, [username, dispatch]);
 
+  useEffect(() => {
+    console.log(invite);
+    console.log(invite);
+  }, [invite]);
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Sidebar />
-        {Object.keys(invite).length !== 0 && <InvitePopup />}
+        {Object.keys(invite).length !== 0 && <InvitePopup invite={invite} />}
         {(loading || !connection) && <LoadingSpinner />}
         <SidebarOffset>
           <Routes>

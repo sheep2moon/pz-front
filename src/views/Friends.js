@@ -22,14 +22,17 @@ const Friends = () => {
 
   const fetchFriends = async () => {
     dispatch(setLoading(true));
-    const res = await showFriends();
-    if (res.status === 200) {
-      console.log("setting friends");
+    try {
+      const res = await showFriends();
+      if (res.status === 200) {
+        console.log("setting friends");
+      }
       setFriends(res.data);
-    } else {
-      console.log("fetch friends error status: ", res.status);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      dispatch(setLoading(false));
     }
-    dispatch(setLoading(false));
   };
 
   useEffect(() => {
