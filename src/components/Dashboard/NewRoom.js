@@ -7,7 +7,6 @@ import { callPostApi, joinTheRoom } from "../../service/callApi.js";
 import { getApiHeader } from "../../service/auth.js";
 import { useDispatch } from "react-redux";
 import { fetchUserData } from "../../redux/userSlice.js";
-import { updateAccessCode, updateRoomData } from "../../redux/roomSlice.js";
 import { useNavigate } from "react-router";
 
 const NewRoom = ({ setIsNewRoomModal }) => {
@@ -16,20 +15,31 @@ const NewRoom = ({ setIsNewRoomModal }) => {
   const navigate = useNavigate();
 
   const handleCreateRoom = async () => {
+    console.log("createRoom");
     const name = roomNameRef.current.value;
-    const res = await callPostApi(
-      "api/test/createroom",
-      { name: name },
-      { headers: getApiHeader() }
-    );
+    try {
+      const res = await callPostApi(
+        "api/test/createroom",
+        { name: name },
+        { headers: getApiHeader() }
+      );
+      console.log(res);
+      if (res.status === 200) {
+        handleRoomCreated(res.data.code);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRoomCreated = async (code) => {
+    setIsNewRoomModal(false);
+    dispatch(fetchUserData());
+    const res = await joinTheRoom(code);
     if (res.status === 200) {
-      console.log("new-room res: ", res.data);
-      setIsNewRoomModal(false);
-      dispatch(fetchUserData());
-      await joinTheRoom(res.data.code);
-      dispatch(updateRoomData(res.data.code));
-      dispatch(updateAccessCode(res.data.code));
-      navigate(`/room/${res.data.code}`);
+      navigate(`/room/${code}`);
+    } else {
+      console.log("Error joining room", res);
     }
   };
 

@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getApiHeader } from "../service/auth.js";
-import { callGetApi, callUpdateRoom } from "../service/callApi.js";
+import { callUpdateRoom } from "../service/callApi.js";
 
 export const updateRoomData = createAsyncThunk(
   "api/room",
   async (roomCode, ThunkApi) => {
     const res = await callUpdateRoom(roomCode);
-    console.log("redux", res);
+    console.log("roomUpdate recieved data", res.data);
     return res.data;
   }
 );

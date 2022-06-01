@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { setConnection, setLoading } from "../redux/serviceSlice.js";
+import { isUserLoggedIn } from "../service/auth.js";
 import { registerSocket, socket } from "../service/socket.js";
 
 const rotate360 = keyframes`
@@ -21,7 +22,7 @@ const LoadingSpinner = () => {
     const connectionChecker = setInterval(() => {
       if (socket.connected) {
         dispatch(setConnection(true));
-        if (socket.id) registerSocket();
+        if (socket.id && isUserLoggedIn()) registerSocket();
         clearInterval(connectionChecker);
       }
     }, 1000);

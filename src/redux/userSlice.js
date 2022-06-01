@@ -4,6 +4,7 @@ import { callGetApi } from "../service/callApi.js";
 
 export const fetchUserData = createAsyncThunk("api/user", async (ThunkApi) => {
   const res = await callGetApi("api/test/user", { headers: getApiHeader() });
+  console.log("fetchUserData, res: ", res.status, res);
   if (res.status === 200) return res.data;
   else return { error: { status: res.status, message: "api/test/user error" } };
 });

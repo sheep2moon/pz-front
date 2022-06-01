@@ -4,7 +4,7 @@ import styled from "styled-components";
 import RoundedButton from "../components/Inputs/RoundedButton.js";
 import { getApiHeader } from "../service/auth.js";
 import { callPostApi, changeAvatar, url } from "../service/callApi.js";
-import { changeUsername, fetchUserData } from "../redux/userSlice.js";
+import { fetchUserData } from "../redux/userSlice.js";
 
 const Profile = () => {
   const [chosenOption, setChosenOption] = useState(0);

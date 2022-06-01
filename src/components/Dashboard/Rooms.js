@@ -1,19 +1,16 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import { updateRoomData } from "../../redux/roomSlice.js";
-import { updateAccessCode } from "../../redux/roomSlice.js";
+import { joinTheRoom } from "../../service/callApi.js";
 import CreateButton from "./CreateButton.js";
 import { SectionWrapper } from "./styledElements.js";
 
 const Rooms = ({ setIsNewRoomModal, rooms }) => {
   const navigate = useNavigate();
   console.log(rooms);
-  const dispatch = useDispatch();
+
   const navigateToRoom = (code) => {
-    dispatch(updateRoomData(code));
-    dispatch(updateAccessCode(code));
+    joinTheRoom(code);
     navigate(`/room/${code}`);
   };
 
@@ -21,7 +18,7 @@ const Rooms = ({ setIsNewRoomModal, rooms }) => {
     <SectionWrapper>
       <CreateButton onClick={() => setIsNewRoomModal(true)} />
       {rooms &&
-        rooms.map((room, index) => (
+        rooms.map((room) => (
           <RoomButton
             key={room._id}
             onClick={() => navigateToRoom(room.accessCode)}

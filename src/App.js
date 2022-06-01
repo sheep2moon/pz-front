@@ -22,14 +22,11 @@ function App() {
   const { username } = useSelector((state) => state.user);
   const { loading, connection, invite } = useSelector((store) => store.service);
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (isUserLoggedIn() && !username) dispatch(fetchUserData());
-  }, [username, dispatch]);
 
   useEffect(() => {
-    console.log(invite);
-    console.log(invite);
-  }, [invite]);
+    if (isUserLoggedIn() && !username) dispatch(fetchUserData());
+  }, [username]);
+
   return (
     <ThemeProvider theme={theme}>
       <Router>

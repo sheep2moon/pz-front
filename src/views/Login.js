@@ -50,7 +50,9 @@ const Login = () => {
       if (res.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(res.data));
         dispatch(fetchUserData());
-        registerSocket();
+        setTimeout(() => {
+          registerSocket();
+        }, 500);
         navigate("/");
       }
     } else {

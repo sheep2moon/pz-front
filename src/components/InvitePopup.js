@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { useTheme } from "styled-components";
-import { updateAccessCode, updateRoomData } from "../redux/roomSlice.js";
+import { updateRoomData } from "../redux/roomSlice.js";
 import { setInvite } from "../redux/serviceSlice.js";
 import { fetchUserData } from "../redux/userSlice.js";
 import { joinTheRoom } from "../service/callApi.js";
@@ -16,9 +16,8 @@ const InvitePopup = ({ invite }) => {
 
   const handleAccept = () => {
     joinTheRoom(invite.code);
-    dispatch(updateRoomData(invite.code));
     dispatch(fetchUserData());
-    dispatch(updateAccessCode(invite.code));
+    dispatch(updateRoomData(invite.code));
     navigate(`/room/${invite.code}`);
     dispatch(setInvite({}));
   };
@@ -50,6 +49,7 @@ const InvitePopup = ({ invite }) => {
 export default InvitePopup;
 
 const PopupWrap = styled.div`
+  z-index: 99;
   position: fixed;
   bottom: 1rem;
   right: 1rem;

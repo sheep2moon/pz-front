@@ -1,44 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
 import { FiUsers } from "react-icons/fi";
 import { RiUserAddLine } from "react-icons/ri";
 import { HiOutlineUserAdd } from "react-icons/hi";
 import { inviteFriend, showFriends, url } from "../../service/callApi.js";
-import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "../../redux/serviceSlice.js";
+import { useSelector } from "react-redux";
 
 const MembersSidebar = ({ roomName, roomCode }) => {
   const { members } = useSelector((state) => state.room);
   const [friends, setFriends] = useState([]);
-  const dispatch = useDispatch();
 
   const fetchFriends = async () => {
-    dispatch(setLoading(true));
     const res = await showFriends();
-    console.log("fetch friends", res.data);
+    console.log("members sidebar fetch friends", res.data);
     if (res.status === 200 && res.data instanceof Array) {
       const filteredFriendsList = res.data.filter((friend) => {
         if (members.some((m) => m.username === friend.username)) return false;
         else return true;
       });
-      console.log(filteredFriendsList);
       setFriends(filteredFriendsList);
+    } else if (res.status === 200) {
+      console.log("No friends");
     } else {
-      console.log("fetch friends error status: ", res.status);
+      console.log("fetch friends error ", res.status);
     }
-    dispatch(setLoading(false));
   };
 
   const handleInvite = async (friendName) => {
     const res = await inviteFriend(friendName, roomName, roomCode);
     if (res.status === 200) {
-      console.log("sucessfully invited", res);
+      console.log("invite status 200, response: ", res);
     } else {
       console.log("invite error");
     }
   };
 
-  useEffect(() => {
+  useMemo(() => {
     fetchFriends();
   }, [members]);
 
@@ -119,6 +116,7 @@ const Member = styled.div`
     height: 30px;
     border-radius: 50%;
     margin: 0 0.5rem;
+    object-fit: cover;
   }
   > div {
     display: flex;

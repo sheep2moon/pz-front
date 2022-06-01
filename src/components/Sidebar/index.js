@@ -23,17 +23,17 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     await leaveTheRoom(accessCode);
-    socket.emit("leave-room", accessCode);
     localStorage.removeItem("user");
     navigate("/login");
   };
 
   useEffect(() => {
     socket.on("invite-ready", (data) => {
-      console.log("INVITATION", data);
+      console.log("$Sidebar: new invite:", data);
       dispatch(setInvite(data));
     });
-    if (socket.id) registerSocket();
+    console.log(isUserLoggedIn());
+    if (socket.id && isUserLoggedIn()) registerSocket();
   }, []);
 
   return (

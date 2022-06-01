@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled, { useTheme } from "styled-components";
 import { CenteredContainer } from "../components/containers";
 import MembersSidebar from "../components/MembersSidebar";
-import { HiOutlineLockClosed, HiOutlineLockOpen } from "react-icons/hi";
+import { HiOutlineLockClosed } from "react-icons/hi";
 import MusicPlayer from "../components/MusicPlayer";
 import RoomPlaylist from "../components/Room/RoomPlaylist";
 
 import { useDispatch, useSelector } from "react-redux";
-import { updateRoomData } from "../redux/roomSlice.js";
-import { joinTheRoom, leaveTheRoom, showFriends } from "../service/callApi.js";
+import { updateAccessCode, updateRoomData } from "../redux/roomSlice.js";
+import { leaveTheRoom } from "../service/callApi.js";
 import { useParams } from "react-router";
 import { socket } from "../service/socket.js";
-import { setLoading } from "../redux/serviceSlice.js";
 
 const temporaryPlaylist = [
   {
@@ -35,23 +34,19 @@ const Room = () => {
 
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { id } = useParams(); // AccessCode
 
   useEffect(() => {
-    const firstRenderJoin = async () => {
-      await joinTheRoom(id, socket.id);
-      socket.emit("join-room", id);
-    };
-    firstRenderJoin();
-    socket.on("updateroom", () => {
-      console.log("updateRoom");
+    dispatch(updateAccessCode(id));
+    const updater = () => {
+      console.log("Socket updateroom signal");
       dispatch(updateRoomData(id));
-    });
-
+    };
+    socket.on("updateroom", updater);
     return async () => {
-      console.log("leaving");
+      socket.off("updateroom", updater);
+      console.log("Leaving room");
       await leaveTheRoom(id);
-      socket.emit("leave-room", id);
     };
   }, []);
 

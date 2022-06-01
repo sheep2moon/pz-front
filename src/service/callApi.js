@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getApiHeader } from "./auth.js";
+import { socket } from "./socket.js";
 
 export const url = "http://localhost:3000/";
 
@@ -30,20 +31,35 @@ export const callGetApi = async (endpoint, config = {}) => {
   }
 };
 
-export const joinTheRoom = async (code, socketId) => {
+export const joinTheRoom = async (code) => {
   try {
     const res = await callPostApi(
       "api/test/joinroom",
-      { code, socketid: socketId },
+      { code, socketid: socket.id },
       { headers: getApiHeader() }
     );
-    console.log("joinTheRoomFunction", res);
+    socket.emit("join-room", code);
+    console.log("joinTheRoom response: ", res);
+    return res;
+  } catch (error) {
+    return console.log("joinTheRoomError: ", error);
+  }
+};
+
+export const leaveTheRoom = async (code) => {
+  try {
+    const res = await callPostApi(
+      "api/test/leaveroom",
+      { code },
+      { headers: getApiHeader() }
+    );
+    socket.emit("leave-room", code);
+    console.log("leaveTheRoomResponse:", res);
     return res;
   } catch (error) {
     return error.response;
   }
 };
-
 export const searchUsers = async (searchTerm) => {
   try {
     const res = await callPostApi(
@@ -81,18 +97,6 @@ export const showFriends = async () => {
   }
 };
 
-export const leaveTheRoom = async (code) => {
-  try {
-    const res = await callPostApi(
-      "api/test/leaveroom",
-      { code },
-      { headers: getApiHeader() }
-    );
-    return res;
-  } catch (error) {
-    return error.response;
-  }
-};
 export const inviteFriend = async (friendname, roomname, code) => {
   console.log("inviter");
   try {
