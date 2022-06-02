@@ -8,7 +8,7 @@ import RoomPlaylist from "../components/Room/RoomPlaylist";
 
 import { useDispatch, useSelector } from "react-redux";
 import { updateAccessCode, updateRoomData } from "../redux/roomSlice.js";
-import { leaveTheRoom } from "../service/callApi.js";
+import { joinTheRoom, leaveTheRoom } from "../service/callApi.js";
 import { useParams } from "react-router";
 import { socket } from "../service/socket.js";
 
@@ -39,9 +39,10 @@ const Room = () => {
   useEffect(() => {
     dispatch(updateAccessCode(id));
     const updater = () => {
-      console.log("Socket updateroom signal");
       dispatch(updateRoomData(id));
     };
+    updater();
+    joinTheRoom(id);
     socket.on("updateroom", updater);
     return async () => {
       socket.off("updateroom", updater);

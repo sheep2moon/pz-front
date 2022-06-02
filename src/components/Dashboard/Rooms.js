@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import { fetchUserData } from "../../redux/userSlice.js";
 import { joinTheRoom } from "../../service/callApi.js";
 import CreateButton from "./CreateButton.js";
 import { SectionWrapper } from "./styledElements.js";
 
 const Rooms = ({ setIsNewRoomModal, rooms }) => {
   const navigate = useNavigate();
-  console.log(rooms);
+  const dispatch = useDispatch();
 
   const navigateToRoom = (code) => {
     joinTheRoom(code);
     navigate(`/room/${code}`);
   };
+
+  useEffect(() => {
+    dispatch(fetchUserData());
+  }, [dispatch]);
 
   return (
     <SectionWrapper>
